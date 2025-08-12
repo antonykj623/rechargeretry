@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:recharge_retry/web/apiservices.dart';
 import 'package:recharge_retry/widgets/recharge_details.dart';
+import 'package:recharge_retry/widgets/save_kart_orders.dart';
 
 import '../domain/recharge_list_entity.dart';
 
@@ -122,6 +123,23 @@ if(rechargeListEntity.status==1)
         
         ,
         backgroundColor: Color(0xff133B52),
+
+        actions: [
+
+          GestureDetector(
+            child: IconButton(onPressed: (){
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SaveKartOrders()));
+
+
+
+
+            }, icon: Icon(Icons.shopping_cart,color: Colors.white,size: 30,)),
+          )
+
+        ],
       ),
 
       body: RefreshIndicator(
@@ -221,7 +239,7 @@ if(rechargeListEntity.status==1)
 
                     child: Container(
                       width: double.infinity,
-                      height: 200,
+                      height: 250,
 
                       child: Column(
 
@@ -232,7 +250,7 @@ if(rechargeListEntity.status==1)
                             trailing: TextButton(
 
                               onPressed: () async {
-                                final result = await Navigator.push(
+                                final result  =await Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) => RechargeDetails(rdata[index])));
 
@@ -254,7 +272,7 @@ if(rechargeListEntity.status==1)
 
 
                             ,
-                            title: Text(rdata[index].fullName.toString()+"\n"+rdata[index].accountNumber.toString(),
+                            title: Text(rdata[index].fullName.toString()+"\n"+rdata[index].accountNumber.toString()+"\n"+rdata[index].rechargid.toString(),
                               style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.black),
 
                             ),
@@ -305,9 +323,12 @@ if(rechargeListEntity.status==1)
                                     "Recharge pending",
                                     style: TextStyle(fontSize: 14, color: Colors.blue),
                                   )
-                                      : Text(
+                                      : (rdata[index].status.toString().compareTo("0") == 0)?  Text(
                                     "Recharge Failed",
-                                    style: TextStyle(fontSize: 14, color: Colors.redAccent),
+                                    style: TextStyle(fontSize: 14, color: Colors.redAccent) ,
+                                  ) :  Text(
+                                    "Refunded",
+                                    style: TextStyle(fontSize: 14, color: Colors.redAccent) ,
                                   ),
                                 ),
                               ),
@@ -316,7 +337,7 @@ if(rechargeListEntity.status==1)
                             ,flex: 1,),
 
                           (rdata[index].status.toString().compareTo("1")!=0 &&
-                              rdata[index].paymentStatus.toString().compareTo("5")==0)?
+                              rdata[index].paymentStatus.toString().compareTo("5")==0 && (rdata[index].status.toString().compareTo("3") != 0))?
                           Expanded(child: Padding(
 
                   padding: EdgeInsets.all(5),

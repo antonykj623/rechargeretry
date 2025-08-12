@@ -491,6 +491,7 @@ genstatus=0;
           mp["gen_status"]=genstatus.toString();
           mp["refund_transaction_id"]=_transactionid.text.trim();
           mp["id"]=rechargeListData.rechargid.toString();
+          mp["amount_transfered"]=rechargeListData.transactionAmount.toString();
 
 
 
@@ -514,6 +515,9 @@ genstatus=0;
                   duration: Duration(seconds: 1), // Show for 3 seconds
                 ),
               );
+
+            //  submit_OperatorUpdation(selectedOperator,operatorCode) ;
+
 
               submit_statusUpdation(rechargestatus,genstatus);
             }
@@ -545,6 +549,22 @@ genstatus=0;
 
 
   }
+
+
+  submit_OperatorUpdation(String operator,String operatorcode) async
+  {
+    ApiHelper.showLoaderDialog(context);
+
+
+    ApiHelper apiHelper=new ApiHelper();
+
+    String response=await apiHelper.getApiResponse("https://mysaveapp.com/easyrecharge/paymentgateway/updateOperatorDetails.php?timestamp="+apiHelper.getRandomnumber()+"&operator="+operator.toString()+"&id="+rechargeListData.rechargid.toString()+"&operator_code="+operatorcode);
+
+    Navigator.pop(context);
+  }
+
+
+
 
 
   submit_statusUpdation(int rechargestatus,int genstatus) async {

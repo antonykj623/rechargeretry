@@ -8,6 +8,9 @@ import 'package:recharge_retry/domain/cart_order_details_entity.dart';
 import 'package:recharge_retry/domain/cart_order_entity.dart';
 import 'package:recharge_retry/domain/recharge_list_entity.dart';
 import 'package:recharge_retry/domain/update_status_entity.dart';
+import 'package:recharge_retry/dth_recharge/pack_list_entity.dart';
+import 'package:recharge_retry/dth_recharge/profile_entity.dart';
+import 'package:recharge_retry/dth_recharge/report/recharge_history_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -176,6 +179,34 @@ class JsonConvert {
       return data.map<UpdateStatusEntity>((Map<String, dynamic> e) =>
           UpdateStatusEntity.fromJson(e)).toList() as M;
     }
+    if (<PackListEntity>[] is M) {
+      return data.map<PackListEntity>((Map<String, dynamic> e) =>
+          PackListEntity.fromJson(e)).toList() as M;
+    }
+    if (<PackListPacks>[] is M) {
+      return data.map<PackListPacks>((Map<String, dynamic> e) =>
+          PackListPacks.fromJson(e)).toList() as M;
+    }
+    if (<PackListPacksPrices>[] is M) {
+      return data.map<PackListPacksPrices>((Map<String, dynamic> e) =>
+          PackListPacksPrices.fromJson(e)).toList() as M;
+    }
+    if (<ProfileEntity>[] is M) {
+      return data.map<ProfileEntity>((Map<String, dynamic> e) =>
+          ProfileEntity.fromJson(e)).toList() as M;
+    }
+    if (<ProfileData>[] is M) {
+      return data.map<ProfileData>((Map<String, dynamic> e) =>
+          ProfileData.fromJson(e)).toList() as M;
+    }
+    if (<RechargeHistoryEntity>[] is M) {
+      return data.map<RechargeHistoryEntity>((Map<String, dynamic> e) =>
+          RechargeHistoryEntity.fromJson(e)).toList() as M;
+    }
+    if (<RechargeHistoryData>[] is M) {
+      return data.map<RechargeHistoryData>((Map<String, dynamic> e) =>
+          RechargeHistoryData.fromJson(e)).toList() as M;
+    }
 
     debugPrint("$M not found");
 
@@ -207,6 +238,13 @@ class JsonConvertClassCollection {
     (RechargeListEntity).toString(): RechargeListEntity.fromJson,
     (RechargeListData).toString(): RechargeListData.fromJson,
     (UpdateStatusEntity).toString(): UpdateStatusEntity.fromJson,
+    (PackListEntity).toString(): PackListEntity.fromJson,
+    (PackListPacks).toString(): PackListPacks.fromJson,
+    (PackListPacksPrices).toString(): PackListPacksPrices.fromJson,
+    (ProfileEntity).toString(): ProfileEntity.fromJson,
+    (ProfileData).toString(): ProfileData.fromJson,
+    (RechargeHistoryEntity).toString(): RechargeHistoryEntity.fromJson,
+    (RechargeHistoryData).toString(): RechargeHistoryData.fromJson,
   };
 
   bool containsKey(String type) {

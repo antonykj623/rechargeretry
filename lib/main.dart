@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recharge_retry/dth_recharge/d_t_h_recharge_dashboard.dart';
+import 'package:recharge_retry/dth_recharge/report/rechargereport.dart';
 import 'package:recharge_retry/widgets/recharge_list_screen.dart';
 
 void main() {
@@ -68,11 +70,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   redirectToRechargeList()
   {
+    //
+    // Future.delayed(Duration(seconds: 3),() {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => RechargeListScreen()),
+    //   );
+    //
+    // },);
+
 
     Future.delayed(Duration(seconds: 3),() {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RechargeListScreen()),
+        MaterialPageRoute(builder: (context) => RechargeReportPage()),
       );
 
     },);

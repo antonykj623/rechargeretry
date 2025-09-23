@@ -57,7 +57,7 @@ class _RechargeListScreenState extends State<RechargeListScreen> {
     }
 
 ApiHelper apiHelper=new ApiHelper();
-String response=await apiHelper.getApiResponse("https://mysaveapp.com/easyrecharge/paymentgateway/getRechargeLists.php?q="+apiHelper.getRandomnumber()+"&date="+date);
+String response=await apiHelper.getApiResponse("https://mysaving.in/easyrecharge/paymentgateway/getRechargeLists.php?q="+apiHelper.getRandomnumber()+"&date="+date);
 
 var json=jsonDecode(response);
     RechargeListEntity rechargeListEntity=RechargeListEntity.fromJson(json);
@@ -353,7 +353,7 @@ if(rechargeListEntity.status==1)
 
                         ApiHelper apiHelper=new ApiHelper();
 
-                        String response=await apiHelper.getApiResponse("https://mysaveapp.com/easyrecharge/paymentgateway/retryrechargetest.php?timestamp="+apiHelper.getRandomnumber()+"&transactionid="+rdata[index].rechargid.toString());
+                        String response=await apiHelper.getApiResponse("https://mysaving.in/easyrecharge/paymentgateway/retryrechargetest.php?timestamp="+apiHelper.getRandomnumber()+"&transactionid="+rdata[index].rechargid.toString());
 
                         Navigator.pop(context);
                         _getRechargeList(date, false);

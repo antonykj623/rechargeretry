@@ -70,23 +70,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   redirectToRechargeList()
   {
-    //
-    // Future.delayed(Duration(seconds: 3),() {
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => RechargeListScreen()),
-    //   );
-    //
-    // },);
-
 
     Future.delayed(Duration(seconds: 3),() {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => RechargeReportPage()),
+        MaterialPageRoute(builder: (context) => RechargeListScreen()),
       );
 
     },);
+
+
+    // Future.delayed(Duration(seconds: 3),() {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => RechargeReportPage()),
+    //   );
+    //
+    // },);
 
   }
 

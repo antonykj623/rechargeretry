@@ -7,7 +7,7 @@ export 'package:recharge_retry/generated/json/cart_order_details_entity.g.dart';
 class CartOrderDetailsEntity {
 	int? status = 0;
 	String? message = '';
-	CartOrderDetailsData? data;
+	List<CartOrderDetailsData>? data = [];
 
 	CartOrderDetailsEntity();
 
@@ -46,7 +46,7 @@ class CartOrderDetailsData {
 	@JSONField(name: "initiate_confirm")
 	String? initiateConfirm = '';
 	@JSONField(name: "order_item_upd_date")
-	String? orderItemUpdDate = '';
+	dynamic orderItemUpdDate;
 	@JSONField(name: "user_id")
 	String? userId = '';
 	@JSONField(name: "update_by")
@@ -54,19 +54,19 @@ class CartOrderDetailsData {
 	@JSONField(name: "vendor_confirmation_updated_by")
 	String? vendorConfirmationUpdatedBy = '';
 	@JSONField(name: "vendor_confirmation_updated_at")
-	String? vendorConfirmationUpdatedAt = '';
+	dynamic vendorConfirmationUpdatedAt;
 	@JSONField(name: "packing_empoyee_id")
-	String? packingEmpoyeeId = '';
+	dynamic packingEmpoyeeId;
 	@JSONField(name: "packed_at")
-	String? packedAt = '';
+	dynamic packedAt;
 	@JSONField(name: "invoice_status")
 	String? invoiceStatus = '';
 	@JSONField(name: "shipped_emp_id")
-	String? shippedEmpId = '';
+	dynamic shippedEmpId;
 	@JSONField(name: "shipped_at")
-	String? shippedAt = '';
+	dynamic shippedAt;
 	@JSONField(name: "delivering_agency_id")
-	String? deliveringAgencyId = '';
+	dynamic deliveringAgencyId;
 	@JSONField(name: "pod_number")
 	dynamic podNumber;
 	@JSONField(name: "pod_rate")
@@ -81,6 +81,8 @@ class CartOrderDetailsData {
 	dynamic cancelledAt;
 	@JSONField(name: "qty_update")
 	String? qtyUpdate = '';
+	@JSONField(name: "payment_test")
+	String? paymentTest = '';
 	@JSONField(name: "product_name")
 	String? productName = '';
 	@JSONField(name: "product_code")
@@ -97,9 +99,9 @@ class CartOrderDetailsData {
 	@JSONField(name: "prime_image")
 	String? primeImage = '';
 	@JSONField(name: "side_image1")
-	dynamic sideImage1;
+	String? sideImage1 = '';
 	@JSONField(name: "side_image2")
-	dynamic sideImage2;
+	String? sideImage2 = '';
 	@JSONField(name: "side_image3")
 	dynamic sideImage3;
 	@JSONField(name: "side_image4")

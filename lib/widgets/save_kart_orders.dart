@@ -21,7 +21,7 @@ class _SaveKartOrdersState extends State<SaveKartOrders> with SingleTickerProvid
   List<CartOrderData> rdata = [];
   List<CartOrderData> filterdata = [];
 
-  late TabController _tabController;
+
 
   int initiated=0,packing=1,initiateshipping=4,confirmshipping=5,confirmdelivery=6;
 
@@ -30,7 +30,7 @@ class _SaveKartOrdersState extends State<SaveKartOrders> with SingleTickerProvid
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+
     DateTime dt=DateTime.now();
     String day="",month="";
     month=  (dt.month>=10)?dt.month.toString():"0"+dt.month.toString();
@@ -46,7 +46,7 @@ class _SaveKartOrdersState extends State<SaveKartOrders> with SingleTickerProvid
 
 
 
-getCartOrder(date,initiated,0);
+getCartOrder(date);
   }
 
 
@@ -68,13 +68,11 @@ getCartOrder(date,initiated,0);
 
         date=  dt.year.toString()+"-"+month+"-"+day;
 
-        setState(() {
-          _tabController.index=0;
-        });
 
 
 
-        getCartOrder(date,initiated,0);
+
+        getCartOrder(date);
       });
     }
   }
@@ -155,200 +153,69 @@ getCartOrder(date,initiated,0);
             ],
           ),flex: 1,),
 
-          Expanded(child: Column(
-            children: [
-              Container(
-                color: Colors.grey[200],
-                child: TabBar(
-                  isScrollable: true,
-                  indicatorColor: Color(0xff0B7D97),
-                  labelColor: Color(0xff0B7D97),
-                  unselectedLabelColor: Colors.grey,
-                  controller: _tabController,
-                  onTap: (index) {
+          Expanded(child: Padding(
 
-                    if(index==0) {
-                      getCartOrder(date, initiated,0);
-                    }
-                    else if(index==1)
-                      {
-                      getCartOrder(date, packing,1);
-                      }
-                    else if(index==2)
-                    {
-                    getCartOrder(date, 1,initiateshipping-1);
-                    }
-                    else if(index==3)
-                    {
-                    getCartOrder(date, 1,confirmshipping-1);
-                    }
-                    else if(index==4)
-                    {
-                    getCartOrder(date, 2,confirmdelivery-1);
-                    }
+            padding: EdgeInsets.only(top: 5),
+            child: (rdata.length>0)? ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: rdata.length, // Number of items to display in the list.
 
-                  },
+              // Builds each item in the list dynamically based on the index.
+              itemBuilder: (BuildContext context, int index) {
 
-                  tabs: [
-                    Tab(text: 'Confirmation'),
-                    Tab(text: 'Packing'),
-                    Tab(text: 'Shipping initiated'),
+                CartOrderData crdata=rdata[index];
+                String dateStr = crdata.orderdata!.dateOrder.toString();
+                DateTime dateTime = DateTime.parse(dateStr);
+                String formatted = DateFormat('dd-MM-yyyy hh:mm a').format(dateTime);
 
-                    Tab(text: 'Shipping Confirmation'),
-                    Tab(text: 'Delivery Confirmation'),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Padding(
-
-                  padding: EdgeInsets.only(top: 5),
-                  child: Column(
-                    children: [
-
-                      Expanded(child: (rdata.length>0)? ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemCount: rdata.length, // Number of items to display in the list.
-
-                        // Builds each item in the list dynamically based on the index.
-                        itemBuilder: (BuildContext context, int index) {
-
-                          CartOrderData crdata=rdata[index];
-                          String dateStr = crdata.orderdata!.dateOrder.toString();
-                          DateTime dateTime = DateTime.parse(dateStr);
-                          String formatted = DateFormat('dd-MM-yyyy hh:mm a').format(dateTime);
-
-                          return Card(
-                            margin: EdgeInsets.all(8),
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            child: ListTile(
-                              leading:                       Checkbox(
-                                value: crdata.orderdata!.ischecked,
-                                onChanged: (bool? newValue) {
-
-                                  if(newValue!=null) {
-                                    setState(() {
-                                      crdata.orderdata!.ischecked = newValue!;
-                                    });
-                                  }
-                                },
-                              ),
-
-                              title: Text('Order ID: ${crdata.orderdata!.id.toString()}'),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Date: $formatted'),
-                                  Text('Total Price: ₹${crdata.orderdata!.totalprice}'),
-                                  Text('Paid: ₹${crdata.orderdata!.paidAmount}'),
-                                  Text('Used Wallet Amount: ₹${crdata.orderdata!.usedWalletAmount}'),
-                                  Text('Payment Status: ${crdata.orderdata!.paymentStatus.toString() == "1" ? "Paid" : (crdata.orderdata!.paymentStatus.toString() == "0" ? "Failed":"Pending") }'),
-                                ],
-                              ),
-                              trailing: GestureDetector(
-
-                                child:    Icon(Icons.arrow_forward_ios),
-                                onTap: (){
-
-                                  showOrderDetails(crdata);
+                return Card(
+                  margin: EdgeInsets.all(8),
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  child: ListTile(
 
 
-                                },
+                    title: Text('Order ID: ${crdata.orderdata!.id.toString()}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Date: $formatted'),
+                        Text('Total Price: ₹${crdata.orderdata!.totalprice}'),
+                        Text('Paid: ₹${crdata.orderdata!.paidAmount}'),
+                        Text('Used Wallet Amount: ₹${crdata.orderdata!.usedWalletAmount}'),
+                        Text('Payment Status: ${crdata.orderdata!.paymentStatus.toString() == "1" ? "Paid" : (crdata.orderdata!.paymentStatus.toString() == "0" ? "Failed":"Pending") }',style: TextStyle(color: crdata.orderdata!.paymentStatus.toString() == "1" ? Colors.green : (crdata.orderdata!.paymentStatus.toString() == "0" ? Colors.red:Colors.amber
+                            ),))
+                      ],
+                    ),
+                    trailing: GestureDetector(
+
+                      child:    Icon(Icons.arrow_forward_ios),
+                      onTap: (){
+
+                        showOrderDetails(crdata);
 
 
-                              )
+                      },
+
+
+                    )
 
 
 
-                           ,
-                            ),
-                          );
-                        },
-                      ) : Stack(
-                        children: [
-                          Align(alignment: FractionalOffset.center,
+                    ,
+                  ),
+                );
+              },
+            ) : Stack(
+              children: [
+                Align(alignment: FractionalOffset.center,
 
-                          child: Text("No data found"),
-                          )
-                        ],
-                      ) ,flex: 4, ),
-
-                      Expanded(child:
-
-                          Stack(
-    children: [
-
-      Align(
-    alignment: FractionalOffset.center,
-    child:   (rdata.length>0)? Container(
-      width: 100,
-      height: 60,
-      child: GestureDetector(
-        onTap: () {
-
-if(current_orderstatus==0 && current_initiatedstatus==0)
-  {
-    for(int i=0;i<rdata.length;i++)
-      {
-        CartOrderData crdata=rdata[i];
-
-        if(crdata.orderdata!.ischecked)
-          {
-
-           // updateOrderItemStatus.php
-
-          }
-
-
-      }
-
-
-  }
-else{
-
-
-
-}
-
-
-
-
-        },
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            'Update',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-      ),
-
-
-    ) : Container(),
-    )
-    ],
-    )
-
-
-
-                        ,flex: 1,
-                      )
-
-
-                    ],
-
-                  )
-                   ,
+                  child: Text("No data found"),
                 )
-
-              ),
-            ],
+              ],
+            )
+            ,
           ),
 
 
@@ -419,11 +286,10 @@ else{
 
 
 
-  getCartOrder(String dateorder,int status,int initiate_confirm)
+  getCartOrder(String dateorder)
   async {
 
-    current_orderstatus=status;
-    current_initiatedstatus=initiate_confirm;
+
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ApiHelper.showLoaderDialog(context);
@@ -433,7 +299,7 @@ else{
 
     ApiHelper apiHelper=new ApiHelper();
 
-    String urldata="https://mysaving.in/IntegraAccount/ecommerce_api/getOrderWithAddress.php?timestamp="+apiHelper.getRandomnumber()+"&dateorder="+dateorder+"&status="+status.toString()+"&initiate_confirm="+initiate_confirm.toString();
+    String urldata="https://mysaving.in/IntegraAccount/ecommerce_api/getOrderWithAddress.php?timestamp="+apiHelper.getRandomnumber()+"&dateorder="+dateorder;
 
     print(urldata);
     String response=await apiHelper.getApiResponse(urldata);

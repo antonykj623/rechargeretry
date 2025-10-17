@@ -87,6 +87,17 @@ getCartOrder(date);
         leading: IconButton(icon: Icon(Icons.arrow_back,color: Colors.white,), onPressed: () { Navigator.pop(context); },),
         backgroundColor: Color(0xff133B52),
 
+        actions: [
+
+          IconButton(icon: Icon(Icons.refresh,color: Colors.white,), onPressed: () {
+
+           getCartOrder(date);
+
+
+            },),
+
+        ],
+
       ),
 
       body: Column(

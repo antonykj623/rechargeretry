@@ -5,6 +5,10 @@ import 'package:recharge_retry/domain/cart_order_details_entity.dart';
 import 'package:recharge_retry/domain/cart_order_entity.dart';
 import 'package:intl/intl.dart';
 import 'package:recharge_retry/widgets/savekart_order_details.dart';
+import 'package:recharge_retry/widgets/searchuser.dart';
+import 'package:recharge_retry/widgets/wallet_balance.dart';
+import 'package:recharge_retry/widgets/wallet_points.dart';
+import '../domain/ProfileEntity.dart';
 import '../web/apiservices.dart';
 
 class SaveKartOrders extends StatefulWidget {
@@ -88,6 +92,46 @@ getCartOrder(date);
         backgroundColor: Color(0xff133B52),
 
         actions: [
+
+      IconButton(icon: Icon(Icons.wallet,color: Colors.white,), onPressed: () {
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Choose an option"),
+              content: Text("Select one of the following actions."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+
+                    getUserDetails(0);
+
+
+                  },
+                  child: Text("Wallet Balance"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    getUserDetails(1);
+                  },
+                  child: Text("Wallet Points"),
+                ),
+
+              ],
+            );
+          },
+        );
+
+
+
+      },),
+
+
+
+
 
           IconButton(icon: Icon(Icons.refresh,color: Colors.white,), onPressed: () {
 
@@ -241,6 +285,51 @@ getCartOrder(date);
 
     );
   }
+
+
+
+  getUserDetails(int code)async
+  {
+    final selectedItem = await showDialog(
+      context: context,
+      builder: (context) => SearchListDialog(),
+    );
+
+    if (selectedItem != null) {
+
+      UserData usr=selectedItem as UserData;
+
+
+      if (code==0) {
+
+        //wallet balance
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => WalletBalance(usr),
+          ),
+        );
+
+      }
+      else{
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => WalletPoints(usr),
+          ),
+        );
+      }
+
+
+
+
+
+    }
+
+  }
+
 
 
 

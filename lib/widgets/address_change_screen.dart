@@ -354,6 +354,41 @@ class _AddressChangeScreenState extends State<AddressChangeScreen> {
           Expanded(child: SingleChildScrollView(
             child: Column(
               children: [
+
+                Padding(padding: EdgeInsets.all(10),
+
+                child: TextButton(onPressed: (){
+                  setState(() {
+
+                    _nameController.clear();
+
+                    _phoneController.clear();
+                    _houseflatnameController.clear();
+                    _houseflatnoController.clear();
+                    _placenameController.clear();
+                    _landmarkController.clear();
+                    _districtController.clear();
+                    _pincodecontroller.clear();
+                    if(data.state.toString().isEmpty)
+                    {
+                      selectedState = "Kerala";
+                    }
+
+
+
+                  });
+
+
+
+
+
+                }, child: Text("Clear All"))
+
+
+                )
+
+
+                ,
                 TextField(
                   controller: _nameController,
                   decoration: InputDecoration(labelText: "Name"),
@@ -444,7 +479,7 @@ class _AddressChangeScreenState extends State<AddressChangeScreen> {
 
               ],
             ),
-          ))
+          ),flex: 4,)
 
         ],
       ),

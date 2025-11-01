@@ -68,7 +68,14 @@ class CartOrderDataOrderdata {
 	String? description = '';
 	@JSONField(name: "payment_status")
 	String? paymentStatus = '';
-	bool ischecked=false;
+	@JSONField(name: "initiate_confirm")
+	String? initiateConfirm = '';
+	@JSONField(name: "full_name")
+	String? fullName = '';
+	@JSONField(name: "registered_ob")
+	String? registeredOb = '';
+	@JSONField(name: "email_id")
+	String? emailId = '';
 
 	CartOrderDataOrderdata();
 
@@ -90,6 +97,8 @@ class CartOrderDataOrderitemdata {
 	String? quantity = '';
 	String? price = '';
 	String? stockid = '';
+	@JSONField(name: "price_stock")
+	String? priceStock = '';
 	String? netpayablecommission = '';
 	@JSONField(name: "sponsor_casback")
 	String? sponsorCasback = '';
@@ -105,7 +114,7 @@ class CartOrderDataOrderitemdata {
 	@JSONField(name: "initiate_confirm")
 	String? initiateConfirm = '';
 	@JSONField(name: "order_item_upd_date")
-	String? orderItemUpdDate = '';
+	dynamic orderItemUpdDate;
 	@JSONField(name: "user_id")
 	String? userId = '';
 	@JSONField(name: "update_by")
@@ -140,6 +149,8 @@ class CartOrderDataOrderitemdata {
 	dynamic cancelledAt;
 	@JSONField(name: "qty_update")
 	String? qtyUpdate = '';
+	@JSONField(name: "payment_test")
+	String? paymentTest = '';
 
 	CartOrderDataOrderitemdata();
 

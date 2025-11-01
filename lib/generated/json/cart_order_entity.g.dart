@@ -153,9 +153,23 @@ CartOrderDataOrderdata $CartOrderDataOrderdataFromJson(
   if (paymentStatus != null) {
     cartOrderDataOrderdata.paymentStatus = paymentStatus;
   }
-  final bool? ischecked = jsonConvert.convert<bool>(json['ischecked']);
-  if (ischecked != null) {
-    cartOrderDataOrderdata.ischecked = ischecked;
+  final String? initiateConfirm = jsonConvert.convert<String>(
+      json['initiate_confirm']);
+  if (initiateConfirm != null) {
+    cartOrderDataOrderdata.initiateConfirm = initiateConfirm;
+  }
+  final String? fullName = jsonConvert.convert<String>(json['full_name']);
+  if (fullName != null) {
+    cartOrderDataOrderdata.fullName = fullName;
+  }
+  final String? registeredOb = jsonConvert.convert<String>(
+      json['registered_ob']);
+  if (registeredOb != null) {
+    cartOrderDataOrderdata.registeredOb = registeredOb;
+  }
+  final String? emailId = jsonConvert.convert<String>(json['email_id']);
+  if (emailId != null) {
+    cartOrderDataOrderdata.emailId = emailId;
   }
   return cartOrderDataOrderdata;
 }
@@ -179,7 +193,10 @@ Map<String, dynamic> $CartOrderDataOrderdataToJson(
   data['billing_status'] = entity.billingStatus;
   data['description'] = entity.description;
   data['payment_status'] = entity.paymentStatus;
-  data['ischecked'] = entity.ischecked;
+  data['initiate_confirm'] = entity.initiateConfirm;
+  data['full_name'] = entity.fullName;
+  data['registered_ob'] = entity.registeredOb;
+  data['email_id'] = entity.emailId;
   return data;
 }
 
@@ -201,7 +218,10 @@ extension CartOrderDataOrderdataExtension on CartOrderDataOrderdata {
     String? billingStatus,
     String? description,
     String? paymentStatus,
-    bool? ischecked,
+    String? initiateConfirm,
+    String? fullName,
+    String? registeredOb,
+    String? emailId,
   }) {
     return CartOrderDataOrderdata()
       ..id = id ?? this.id
@@ -220,7 +240,10 @@ extension CartOrderDataOrderdataExtension on CartOrderDataOrderdata {
       ..billingStatus = billingStatus ?? this.billingStatus
       ..description = description ?? this.description
       ..paymentStatus = paymentStatus ?? this.paymentStatus
-      ..ischecked = ischecked ?? this.ischecked;
+      ..initiateConfirm = initiateConfirm ?? this.initiateConfirm
+      ..fullName = fullName ?? this.fullName
+      ..registeredOb = registeredOb ?? this.registeredOb
+      ..emailId = emailId ?? this.emailId;
   }
 }
 
@@ -246,6 +269,10 @@ CartOrderDataOrderitemdata $CartOrderDataOrderitemdataFromJson(
   final String? stockid = jsonConvert.convert<String>(json['stockid']);
   if (stockid != null) {
     cartOrderDataOrderitemdata.stockid = stockid;
+  }
+  final String? priceStock = jsonConvert.convert<String>(json['price_stock']);
+  if (priceStock != null) {
+    cartOrderDataOrderitemdata.priceStock = priceStock;
   }
   final String? netpayablecommission = jsonConvert.convert<String>(
       json['netpayablecommission']);
@@ -284,8 +311,7 @@ CartOrderDataOrderitemdata $CartOrderDataOrderitemdataFromJson(
   if (initiateConfirm != null) {
     cartOrderDataOrderitemdata.initiateConfirm = initiateConfirm;
   }
-  final String? orderItemUpdDate = jsonConvert.convert<String>(
-      json['order_item_upd_date']);
+  final dynamic orderItemUpdDate = json['order_item_upd_date'];
   if (orderItemUpdDate != null) {
     cartOrderDataOrderitemdata.orderItemUpdDate = orderItemUpdDate;
   }
@@ -364,6 +390,10 @@ CartOrderDataOrderitemdata $CartOrderDataOrderitemdataFromJson(
   if (qtyUpdate != null) {
     cartOrderDataOrderitemdata.qtyUpdate = qtyUpdate;
   }
+  final String? paymentTest = jsonConvert.convert<String>(json['payment_test']);
+  if (paymentTest != null) {
+    cartOrderDataOrderitemdata.paymentTest = paymentTest;
+  }
   return cartOrderDataOrderitemdata;
 }
 
@@ -375,6 +405,7 @@ Map<String, dynamic> $CartOrderDataOrderitemdataToJson(
   data['quantity'] = entity.quantity;
   data['price'] = entity.price;
   data['stockid'] = entity.stockid;
+  data['price_stock'] = entity.priceStock;
   data['netpayablecommission'] = entity.netpayablecommission;
   data['sponsor_casback'] = entity.sponsorCasback;
   data['order_id'] = entity.orderId;
@@ -402,6 +433,7 @@ Map<String, dynamic> $CartOrderDataOrderitemdataToJson(
   data['created_at'] = entity.createdAt;
   data['cancelled_at'] = entity.cancelledAt;
   data['qty_update'] = entity.qtyUpdate;
+  data['payment_test'] = entity.paymentTest;
   return data;
 }
 
@@ -412,6 +444,7 @@ extension CartOrderDataOrderitemdataExtension on CartOrderDataOrderitemdata {
     String? quantity,
     String? price,
     String? stockid,
+    String? priceStock,
     String? netpayablecommission,
     String? sponsorCasback,
     String? orderId,
@@ -420,7 +453,7 @@ extension CartOrderDataOrderitemdataExtension on CartOrderDataOrderitemdata {
     String? orderItemStatus,
     String? itemPointsRedeemed,
     String? initiateConfirm,
-    String? orderItemUpdDate,
+    dynamic orderItemUpdDate,
     String? userId,
     dynamic updateBy,
     String? vendorConfirmationUpdatedBy,
@@ -438,6 +471,7 @@ extension CartOrderDataOrderitemdataExtension on CartOrderDataOrderitemdata {
     String? createdAt,
     dynamic cancelledAt,
     String? qtyUpdate,
+    String? paymentTest,
   }) {
     return CartOrderDataOrderitemdata()
       ..id = id ?? this.id
@@ -445,6 +479,7 @@ extension CartOrderDataOrderitemdataExtension on CartOrderDataOrderitemdata {
       ..quantity = quantity ?? this.quantity
       ..price = price ?? this.price
       ..stockid = stockid ?? this.stockid
+      ..priceStock = priceStock ?? this.priceStock
       ..netpayablecommission = netpayablecommission ?? this.netpayablecommission
       ..sponsorCasback = sponsorCasback ?? this.sponsorCasback
       ..orderId = orderId ?? this.orderId
@@ -474,6 +509,7 @@ extension CartOrderDataOrderitemdataExtension on CartOrderDataOrderitemdata {
           this.deliveryRecvedDateFromAgency
       ..createdAt = createdAt ?? this.createdAt
       ..cancelledAt = cancelledAt ?? this.cancelledAt
-      ..qtyUpdate = qtyUpdate ?? this.qtyUpdate;
+      ..qtyUpdate = qtyUpdate ?? this.qtyUpdate
+      ..paymentTest = paymentTest ?? this.paymentTest;
   }
 }

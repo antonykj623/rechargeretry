@@ -93,6 +93,17 @@ getCartOrder(date);
 
         actions: [
 
+          IconButton(icon: Icon(Icons.add,color: Colors.white,), onPressed: () {
+
+
+            getUserDetails(2);
+
+
+
+
+          },),
+
+
       IconButton(icon: Icon(Icons.wallet,color: Colors.white,), onPressed: () {
 
         showDialog(
@@ -236,6 +247,8 @@ getCartOrder(date);
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Date: $formatted'),
+                        Text('Name : ${crdata.orderdata!.fullName}'),
+                        Text('Registered Mob : ${crdata.orderdata!.registeredOb}'),
                         Text('Total Price: ₹${crdata.orderdata!.totalprice}'),
                         Text('Paid: ₹${crdata.orderdata!.paidAmount}'),
                         Text('Used Wallet Amount: ₹${crdata.orderdata!.usedWalletAmount}'),
@@ -312,7 +325,8 @@ getCartOrder(date);
         );
 
       }
-      else{
+
+      else if(code==1){
 
         Navigator.push(
           context,
@@ -320,6 +334,10 @@ getCartOrder(date);
             builder: (_) => WalletPoints(usr),
           ),
         );
+      }
+      else{
+
+
       }
 
 

@@ -151,7 +151,7 @@ class _WalletBalanceState extends State<WalletBalance> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 
-              Icon(Icons.wallet,color: Color(0xff0B7D97),size: 55,),
+
               SizedBox(height: 5,),
               Text("Wallet Balance : "+walletbalance.toString(),style: TextStyle(fontSize: 17,color: Colors.black),),
 

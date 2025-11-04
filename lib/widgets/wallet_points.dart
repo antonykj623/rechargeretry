@@ -158,7 +158,7 @@ class _WalletPointsState extends State<WalletPoints> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
 
-                    Icon(Icons.star, color: Colors.orange, size: 60),
+
                     SizedBox(height: 5,),
                     Text("Purchase Points Balance : "+walletpoints.toString(),style: TextStyle(fontSize: 17,color: Colors.black),),
 

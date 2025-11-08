@@ -153,7 +153,7 @@ class _InvoiceGroupedScreenState extends State<InvoiceGroupedScreen> {
                 return Padding(
                   padding: const EdgeInsets.all(8),
                   child: Card(
-                    elevation: 4,
+                    elevation: 10,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

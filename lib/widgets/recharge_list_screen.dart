@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:recharge_retry/web/apiservices.dart';
 import 'package:recharge_retry/widgets/recharge_details.dart';
 import 'package:recharge_retry/widgets/save_kart_orders.dart';
+import 'package:recharge_retry/widgets/savekart_invoice.dart';
 
 import '../domain/recharge_list_entity.dart';
 
@@ -137,6 +138,19 @@ if(rechargeListEntity.status==1)
 
 
             }, icon: Icon(Icons.shopping_cart,color: Colors.white,size: 30,)),
+          ),
+
+          GestureDetector(
+            child: IconButton(onPressed: (){
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InvoiceGroupedScreen()));
+
+
+
+
+            }, icon: Icon(Icons.list_alt,color: Colors.white,size: 30,)),
           )
 
         ],

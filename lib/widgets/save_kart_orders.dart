@@ -93,52 +93,52 @@ getCartOrder(date);
 
         actions: [
 
-          IconButton(icon: Icon(Icons.add,color: Colors.white,), onPressed: () {
-
-
-            getUserDetails(2);
-
-
-
-
-          },),
-
-
-      IconButton(icon: Icon(Icons.wallet,color: Colors.white,), onPressed: () {
-
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Choose an option"),
-              content: Text("Select one of the following actions."),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-
-                    getUserDetails(0);
-
-
-                  },
-                  child: Text("Wallet Balance"),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    getUserDetails(1);
-                  },
-                  child: Text("Wallet Points"),
-                ),
-
-              ],
-            );
-          },
-        );
-
-
-
-      },),
+      //     IconButton(icon: Icon(Icons.add,color: Colors.white,), onPressed: () {
+      //
+      //
+      //       getUserDetails(2);
+      //
+      //
+      //
+      //
+      //     },),
+      //
+      //
+      // IconButton(icon: Icon(Icons.wallet,color: Colors.white,), onPressed: () {
+      //
+      //   showDialog(
+      //     context: context,
+      //     builder: (BuildContext context) {
+      //       return AlertDialog(
+      //         title: Text("Choose an option"),
+      //         content: Text("Select one of the following actions."),
+      //         actions: [
+      //           TextButton(
+      //             onPressed: () {
+      //               Navigator.pop(context);
+      //
+      //               getUserDetails(0);
+      //
+      //
+      //             },
+      //             child: Text("Wallet Balance"),
+      //           ),
+      //           TextButton(
+      //             onPressed: () {
+      //               Navigator.pop(context);
+      //               getUserDetails(1);
+      //             },
+      //             child: Text("Wallet Points"),
+      //           ),
+      //
+      //         ],
+      //       );
+      //     },
+      //   );
+      //
+      //
+      //
+      // },),
 
 
 

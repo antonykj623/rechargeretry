@@ -1,5 +1,54 @@
 package com.mysaveapp.rechargeretry.recharge_retry
 
 import io.flutter.embedding.android.FlutterActivity
+import android.content.Intent
+import android.net.Uri
+import io.flutter.embedding.android.FlutterFragmentActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugins.GeneratedPluginRegistrant
+class MainActivity: FlutterActivity(){
+    private val PREF_CHANNEL = "native_prefs"
+    private val URL_CHANNEL = "native_url_launcher"
 
-class MainActivity: FlutterActivity()
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine)
+        super.configureFlutterEngine(flutterEngine)
+
+        // 🔹 Existing prefs channel (UNCHANGED)
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            PREF_CHANNEL
+        ).setMethodCallHandler { call, result ->
+            result.notImplemented()
+        }
+
+        // 🔹 NEW URL LAUNCHER CHANNEL
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            URL_CHANNEL
+        ).setMethodCallHandler { call, result ->
+
+            if (call.method == "openUrl") {
+                val url = call.argument<String>("url")
+
+                if (url.isNullOrEmpty()) {
+                    result.error("INVALID_URL", "URL is null", null)
+                    return@setMethodCallHandler
+                }
+
+                try {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    result.success(true)
+                } catch (e: Exception) {
+                    result.error("OPEN_FAILED", e.message, null)
+                }
+
+            } else {
+                result.notImplemented()
+            }
+        }
+    }
+}

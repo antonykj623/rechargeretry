@@ -88,7 +88,7 @@ class ApiHelper {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Recharge retry'),
+          title: Text('Save App Settings'),
           content: Text(message),
           actions: [
 

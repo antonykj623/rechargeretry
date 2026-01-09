@@ -115,9 +115,14 @@ if(rechargeListEntity.status==1)
 
       appBar: AppBar(
         leading: Padding(
-          
+
           padding: EdgeInsets.all(10),
-          child: Image.asset("assets/icon.png",width: 30,height: 30,),
+          child: IconButton(onPressed: (){
+
+            Navigator.pop(context);
+
+
+          }, icon: Icon(Icons.arrow_back_ios,color: Colors.white,)),
         ),
         title: Text("Recharge List",style: TextStyle(fontSize: 15,color: Colors.white),)
         
@@ -127,31 +132,31 @@ if(rechargeListEntity.status==1)
 
         actions: [
 
-          GestureDetector(
-            child: IconButton(onPressed: (){
-
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SaveKartOrders()));
-
-
-
-
-            }, icon: Icon(Icons.shopping_cart,color: Colors.white,size: 30,)),
-          ),
-
-          GestureDetector(
-            child: IconButton(onPressed: (){
-
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InvoiceGroupedScreen()));
-
-
-
-
-            }, icon: Icon(Icons.list_alt,color: Colors.white,size: 30,)),
-          )
+          // GestureDetector(
+          //   child: IconButton(onPressed: (){
+          //
+          //     Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => SaveKartOrders()));
+          //
+          //
+          //
+          //
+          //   }, icon: Icon(Icons.shopping_cart,color: Colors.white,size: 30,)),
+          // ),
+          //
+          // GestureDetector(
+          //   child: IconButton(onPressed: (){
+          //
+          //     Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => InvoiceGroupedScreen()));
+          //
+          //
+          //
+          //
+          //   }, icon: Icon(Icons.list_alt,color: Colors.white,size: 30,)),
+          // )
 
         ],
       ),

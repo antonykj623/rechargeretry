@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -20,6 +21,40 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     super.initState();
     order = widget.data;
   }
+
+
+  updateData(String id,String orderidtoupdate)
+  async {
+
+    ApiHelper.showLoaderDialog(context);
+    String ur="https://mysaving.in/IntegraAccount/api/updateInvisibleOrderData.php?timestamp="+new ApiHelper().getRandomnumber();
+
+    Map<String,String>mp=new HashMap();
+
+    mp["id"]=id;
+    mp["orderidToupdate"]=orderidtoupdate;
+
+
+    String result=await new ApiHelper().postApiResponse(ur, mp);
+    Navigator.pop(context);
+    var js=jsonDecode(result);
+    if(js["status"]==1)
+      {
+        ApiHelper.showAlertDialog(context, "Order updation success.Please check the order list");
+
+      }
+    else{
+
+      ApiHelper.showAlertDialog(context, "Order updation failed");
+
+    }
+
+
+
+  }
+
+
+
 
   void showOrderItemDialog(BuildContext context, Map<String, dynamic> data) {
     showDialog(
@@ -80,8 +115,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       Expanded(child:  TextButton(
                         onPressed: () {
 
-                          String orderidToupdate=order["order_id"];
+                          Navigator.pop(context);
+
+                          String orderidToupdate=order["orderid"];
                           String id=data["id"];
+
+                          updateData(id, orderidToupdate);
+
+
+
 
 
 

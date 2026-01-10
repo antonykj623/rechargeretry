@@ -13,6 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../domain/ProfileEntity.dart';
 import '../web/apiservices.dart';
 import '../web/nativeurllauncher.dart';
+import 'OrderDetails.dart';
+import 'dialogbox/searchorder.dart';
 
 
 class SaveAppServicesScreen extends StatefulWidget {
@@ -212,8 +214,50 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
                     }
                     else if(index==3)
                       {
+//invisible order
+
+                      final result = await showDialog<String>(
+                        context: context,
+                        builder: (context) => SearchTextDialog(),
+                      );
+
+                      if (result != null) {
+                        print("User entered: $result");
+
+//getOrderDetailsByIDStaff.php
+
+                        ApiHelper.showLoaderDialog(context);
+
+                      String ur="https://mysaving.in/IntegraAccount/ecommerce_api/getOrderDetailsByIDStaff.php?timestamp="+new ApiHelper().getRandomnumber()+"&orderid="+result;
+
+                      ApiHelper apihelper=new ApiHelper();
+                      String js=await apihelper.getApiResponse(ur);
+
+                      Navigator.pop(context);
+
+                      var jsdata=jsonDecode(js);
+
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => OrderDetailsScreen(data: jsdata['data']),
+                          ),
+                        );
+
+
+
+
+
+
+
 
                       }
+
+
+
+
+                    }
                     else if(index==4)
                       {
                         Navigator.push(

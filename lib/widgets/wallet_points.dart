@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:recharge_retry/domain/PointsEntity.dart';
+import 'package:recharge_retry/web/ApiMethodes.dart';
 import '../domain/ProfileEntity.dart';
 import '../web/apiservices.dart';
 
@@ -250,7 +251,7 @@ class _WalletPointsState extends State<WalletPoints> {
 
     ApiHelper apiHelper=new ApiHelper();
 
-    String urldata="https://mysaving.in/IntegraAccount/ecommerce_api/getWalletPointsOffice.php?timestamp="+apiHelper.getRandomnumber()+"&user_id="+usr.id;
+    String urldata=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getWalletPointsOffice+"?timestamp="+apiHelper.getRandomnumber()+"&user_id="+usr.id;
 
     print(urldata);
     String response=await apiHelper.getApiResponse(urldata);
@@ -278,7 +279,7 @@ getWalletPointsTransaction()async{
 
   ApiHelper apiHelper=new ApiHelper();
 
-  String urldata="https://mysaving.in/IntegraAccount/ecommerce_api/getWalletPointsTransactionOffice.php?timestamp="+apiHelper.getRandomnumber()+"&user_id="+usr.id;
+  String urldata=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getWalletPointsTransactionOffice+"?timestamp="+apiHelper.getRandomnumber()+"&user_id="+usr.id;
 
   print(urldata);
   String response=await apiHelper.getApiResponse(urldata);

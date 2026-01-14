@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:recharge_retry/domain/walletbalance.dart';
 import 'package:recharge_retry/domain/wallettransactions.dart';
+import 'package:recharge_retry/web/ApiMethodes.dart';
 
 import '../domain/ProfileEntity.dart';
 import '../web/apiservices.dart';
@@ -273,7 +274,7 @@ class _WalletBalanceState extends State<WalletBalance> {
 
     ApiHelper apiHelper=new ApiHelper();
 
-    String response=await apiHelper.getApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/getWalletbalanceforoffice.php?timestamp="+apiHelper.getRandomnumber()+"&user_id="+userd.id.toString());
+    String response=await apiHelper.getApiResponse(ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getWalletbalanceforoffice+"?timestamp="+apiHelper.getRandomnumber()+"&user_id="+userd.id.toString());
 
     print(response);
 
@@ -311,7 +312,7 @@ class _WalletBalanceState extends State<WalletBalance> {
 
     ApiHelper apiHelper=new ApiHelper();
 
-    String response=await apiHelper.getApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/getwalletTransactionsForOffice.php?timestamp="+apiHelper.getRandomnumber()+"&user_id="+userd.id.toString());
+    String response=await apiHelper.getApiResponse(ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getwalletTransactionsForOffice+"?timestamp="+apiHelper.getRandomnumber()+"&user_id="+userd.id.toString());
 
     print(response);
 

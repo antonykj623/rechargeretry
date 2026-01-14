@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:recharge_retry/web/ApiMethodes.dart';
 import 'package:recharge_retry/web/apiservices.dart';
 import 'package:recharge_retry/widgets/recharge_details.dart';
 import 'package:recharge_retry/widgets/save_kart_orders.dart';
@@ -58,7 +59,7 @@ class _RechargeListScreenState extends State<RechargeListScreen> {
     }
 
 ApiHelper apiHelper=new ApiHelper();
-String response=await apiHelper.getApiResponse("https://mysaving.in/easyrecharge/paymentgateway/getRechargeLists.php?q="+apiHelper.getRandomnumber()+"&date="+date);
+String response=await apiHelper.getApiResponse(ApiMethodeCredentials.saveapp_rechargebaseurl+ApiMethodeCredentials.getRechargeLists+"?q="+apiHelper.getRandomnumber()+"&date="+date);
 
 var json=jsonDecode(response);
     RechargeListEntity rechargeListEntity=RechargeListEntity.fromJson(json);
@@ -244,7 +245,7 @@ if(rechargeListEntity.status==1)
             
           ),flex: 1,),
 
-          Expanded(child: Stack(
+          Expanded(flex:4,child: Stack(
 
             children: [
 
@@ -372,7 +373,7 @@ if(rechargeListEntity.status==1)
 
                         ApiHelper apiHelper=new ApiHelper();
 
-                        String response=await apiHelper.getApiResponse("https://mysaving.in/easyrecharge/paymentgateway/retryrechargetest.php?timestamp="+apiHelper.getRandomnumber()+"&transactionid="+rdata[index].rechargid.toString());
+                        String response=await apiHelper.getApiResponse(ApiMethodeCredentials.saveapp_rechargebaseurl+ApiMethodeCredentials.retryrechargetest+"?timestamp="+apiHelper.getRandomnumber()+"&transactionid="+rdata[index].rechargid.toString());
 
                         Navigator.pop(context);
                         _getRechargeList(date, false);
@@ -434,7 +435,7 @@ if(rechargeListEntity.status==1)
 
 
             ],
-          ),flex:4,)
+          ),)
 
 
         ],

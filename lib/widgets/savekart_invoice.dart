@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:recharge_retry/web/ApiMethodes.dart';
 
 class InvoiceGroupedScreen extends StatefulWidget {
   const InvoiceGroupedScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _InvoiceGroupedScreenState extends State<InvoiceGroupedScreen> {
   TextEditingController searchController = TextEditingController();
 
   final String baseUrl =
-      "https://mysaving.in/IntegraAccount/ecommerce_api/getSavekartinvoice.php";
+      ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getSavekartinvoice;
 
   @override
   void initState() {

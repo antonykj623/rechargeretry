@@ -36,6 +36,32 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
     super.initState();
 
     getProfile();
+    getSaveTrackerCount();
+
+  }
+
+
+  getSaveTrackerCount()async{
+
+    //getSaveTrackerCount.php
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ApiHelper.showLoaderDialog(context);
+    });
+
+    ApiHelper apiHelper=new ApiHelper();
+
+    String response=await apiHelper.getApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/getSaveTrackerCount.php?timestamp="+apiHelper.getRandomnumber()+"&id="+widget.cartOrderData.orderdata!.regId.toString());
+
+    print(response);
+
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.pop(context);
+    });
+
+    var js= jsonDecode(response) ;
+
 
   }
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:recharge_retry/domain/addressbyId.dart';
 import 'package:recharge_retry/domain/cart_order_entity.dart';
+import 'package:recharge_retry/web/ApiMethodes.dart';
 
 import '../domain/cart_order_details_entity.dart';
 import '../web/apiservices.dart';
@@ -118,7 +119,7 @@ class _AddressChangeScreenState extends State<AddressChangeScreen> {
 
     ApiHelper apiHelper=new ApiHelper();
 
-    String response=await apiHelper.getApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/getAddressByidoffice.php?timestamp="+apiHelper.getRandomnumber()+"&id="+widget.cartOrderData!.orderdata!.addressId.toString());
+    String response=await apiHelper.getApiResponse(ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getAddressByidoffice+"?timestamp="+apiHelper.getRandomnumber()+"&id="+widget.cartOrderData!.orderdata!.addressId.toString());
 
     print(response);
 
@@ -206,7 +207,7 @@ class _AddressChangeScreenState extends State<AddressChangeScreen> {
 
                      ApiHelper apiHelper=new ApiHelper();
 
-                     String response=await apiHelper.postApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/addNewAddress.php?timestamp="+apiHelper.getRandomnumber(),ap);
+                     String response=await apiHelper.postApiResponse(ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.addNewAddress+"?timestamp="+apiHelper.getRandomnumber(),ap);
 
                      print(response);
 
@@ -507,7 +508,7 @@ class _AddressChangeScreenState extends State<AddressChangeScreen> {
 
     ApiHelper apiHelper=new ApiHelper();
 
-    String response=await apiHelper.postApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/updateUserAndAddressIdOrder.php?timestamp="+apiHelper.getRandomnumber(),ap);
+    String response=await apiHelper.postApiResponse(ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.updateUserAndAddressIdOrder+"?timestamp="+apiHelper.getRandomnumber(),ap);
 
     print(response);
 

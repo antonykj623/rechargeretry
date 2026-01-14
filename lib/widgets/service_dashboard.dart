@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:recharge_retry/domain/autopool_count_entity.dart';
+import 'package:recharge_retry/web/ApiMethodes.dart';
 import 'package:recharge_retry/widgets/recharge_list_screen.dart';
 import 'package:recharge_retry/widgets/save_kart_orders.dart';
 import 'package:recharge_retry/widgets/searchuser.dart';
@@ -14,6 +15,8 @@ import '../domain/ProfileEntity.dart';
 import '../web/apiservices.dart';
 import '../web/nativeurllauncher.dart';
 import 'OrderDetails.dart';
+import 'crm_savekart/complaint_list.dart';
+import 'crm_savekart/select_app_page.dart';
 import 'dialogbox/searchorder.dart';
 
 
@@ -29,7 +32,7 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
 
 
 
-  List<String>saveappkarticons=["Recharge","Wallet","Purchase Points","Invisible orders","Order List","BBPS Report","Change Order's User","Add new Address","Create new order"];
+  List<String>saveappkarticons=["Recharge","Wallet","Purchase Points","Invisible orders","Order List","BBPS Report","Change Order's User","Add new Address","Create new order","Register Complaints"];
 
   List<IconData> saveappkartIconData = [
     Icons.phone_android,        // Recharge
@@ -40,7 +43,8 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
     Icons.receipt_long,         // BBPS Report
     Icons.swap_horiz,           // Change Order's User
     Icons.location_on,          // Add new Address
-    Icons.add_box,              // Create new order
+    Icons.add_box,
+    Icons.report_gmailerrorred// Create new order
   ];
 
 
@@ -228,7 +232,7 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
 
                         ApiHelper.showLoaderDialog(context);
 
-                      String ur="https://mysaving.in/IntegraAccount/ecommerce_api/getOrderDetailsByIDStaff.php?timestamp="+new ApiHelper().getRandomnumber()+"&orderid="+result;
+                      String ur=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getOrderDetailsByIDStaff+"?timestamp="+new ApiHelper().getRandomnumber()+"&orderid="+result;
 
                       ApiHelper apihelper=new ApiHelper();
                       String js=await apihelper.getApiResponse(ur);
@@ -271,6 +275,27 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
                       }
                     else if(index==6)
                       {
+
+                      }
+                    else if (index==7)
+                      {
+
+                      }
+                    else if(index==8)
+                      {
+
+
+                      }
+                    else if(index==9)
+                      {
+
+
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ComplaintListPage()),
+                        );
+
 
                       }
 
@@ -527,7 +552,7 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
 
     ApiHelper.showLoaderDialog(context);
     String a=DateTime.now().microsecondsSinceEpoch.toString();
-    String urldata="https://mysaving.in/IntegraAccount/api/getAutoPoolCount.php?timestamp="+a+"&userid="+usr.id;
+    String urldata=ApiMethodeCredentials.saveapp_baseurl+ApiMethodeCredentials.getAutoPoolCount+"?timestamp="+a+"&userid="+usr.id;
 
     ApiHelper apiHelper=new ApiHelper();
 
@@ -695,7 +720,7 @@ updateProCount(usedcount, availablecount, totalcount, info['reg_id']);
     mp["reg_id"]=regid;
 
     String a=DateTime.now().microsecondsSinceEpoch.toString();
-    String urldata="https://mysaving.in/IntegraAccount/api/updateAutopoolCount.php?timestamp="+a;
+    String urldata=ApiMethodeCredentials.saveapp_baseurl+ApiMethodeCredentials.updateAutopoolCount+"?timestamp="+a;
 
     ApiHelper apiHelper=new ApiHelper();
 

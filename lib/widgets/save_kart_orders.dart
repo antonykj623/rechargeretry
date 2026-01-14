@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:recharge_retry/domain/cart_order_details_entity.dart';
 import 'package:recharge_retry/domain/cart_order_entity.dart';
 import 'package:intl/intl.dart';
+import 'package:recharge_retry/web/ApiMethodes.dart';
 import 'package:recharge_retry/widgets/savekart_order_details.dart';
 import 'package:recharge_retry/widgets/searchuser.dart';
 import 'package:recharge_retry/widgets/wallet_balance.dart';
@@ -360,7 +361,7 @@ getCartOrder(date);
     String dateStr = crdata.orderdata!.dateOrder.toString();
     DateTime dateTime = DateTime.parse(dateStr);
     String formatted = DateFormat('dd-MM-yyyy hh:mm a').format(dateTime);
-    String urldata="https://mysaving.in/IntegraAccount/ecommerce_api/getOrderItemDetails.php?orderid="+crdata.orderdata!.id.toString()+"&timestamp="+apiHelper.getRandomnumber();
+    String urldata=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getOrderItemDetails+"?orderid="+crdata.orderdata!.id.toString()+"&timestamp="+apiHelper.getRandomnumber();
     String response=await apiHelper.getApiResponse(urldata);
 
       Navigator.pop(context);
@@ -417,7 +418,7 @@ getCartOrder(date);
 
     ApiHelper apiHelper=new ApiHelper();
 
-    String urldata="https://mysaving.in/IntegraAccount/ecommerce_api/getOrderWithAddress.php?timestamp="+apiHelper.getRandomnumber()+"&dateorder="+dateorder;
+    String urldata=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getOrderWithAddress+"?timestamp="+apiHelper.getRandomnumber()+"&dateorder="+dateorder;
 
     print(urldata);
     String response=await apiHelper.getApiResponse(urldata);

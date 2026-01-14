@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:recharge_retry/web/ApiMethodes.dart';
 import 'package:recharge_retry/web/apiservices.dart';
 
 import '../domain/recharge_list_entity.dart';
@@ -501,7 +502,7 @@ genstatus=0;
 
           ApiHelper apiHelper=new ApiHelper();
 
-          String response=await apiHelper.postApiResponse("https://mysaving.in/easyrecharge/paymentgateway/updateRechargeDetails.php?timestamp="+apiHelper.getRandomnumber(),mp);
+          String response=await apiHelper.postApiResponse(ApiMethodeCredentials.saveapp_rechargebaseurl+ApiMethodeCredentials.updateRechargeDetails+"?timestamp="+apiHelper.getRandomnumber(),mp);
 
           Navigator.pop(context);
 
@@ -558,7 +559,7 @@ genstatus=0;
 
     ApiHelper apiHelper=new ApiHelper();
 
-    String response=await apiHelper.getApiResponse("https://mysaving.in/easyrecharge/paymentgateway/updateOperatorDetails.php?timestamp="+apiHelper.getRandomnumber()+"&operator="+operator.toString()+"&id="+rechargeListData.rechargid.toString()+"&operator_code="+operatorcode);
+    String response=await apiHelper.getApiResponse(ApiMethodeCredentials.saveapp_rechargebaseurl+ApiMethodeCredentials.updateOperatorDetails+"?timestamp="+apiHelper.getRandomnumber()+"&operator="+operator.toString()+"&id="+rechargeListData.rechargid.toString()+"&operator_code="+operatorcode);
 
     Navigator.pop(context);
   }
@@ -574,7 +575,7 @@ genstatus=0;
 
     ApiHelper apiHelper=new ApiHelper();
 
-    String response=await apiHelper.getApiResponse("https://mysaving.in/easyrecharge/paymentgateway/updateRechargeStatus.php?timestamp="+apiHelper.getRandomnumber()+"&status="+rechargestatus.toString()+"&id="+rechargeListData.rechargid.toString());
+    String response=await apiHelper.getApiResponse(ApiMethodeCredentials.saveapp_rechargebaseurl+ApiMethodeCredentials.updateRechargeStatus+"?timestamp="+apiHelper.getRandomnumber()+"&status="+rechargestatus.toString()+"&id="+rechargeListData.rechargid.toString());
 
     Navigator.pop(context);
 
@@ -608,7 +609,7 @@ async {
 
   ApiHelper apiHelper=new ApiHelper();
 
-  String response=await apiHelper.getApiResponse("https://mysaving.in/easyrecharge/paymentgateway/updateGenStatus.php?timestamp="+apiHelper.getRandomnumber()+"&status="+genstatus.toString()+"&id="+rechargeListData.rechargid.toString());
+  String response=await apiHelper.getApiResponse(ApiMethodeCredentials.saveapp_rechargebaseurl+ApiMethodeCredentials.updateGenStatus+"?timestamp="+apiHelper.getRandomnumber()+"&status="+genstatus.toString()+"&id="+rechargeListData.rechargid.toString());
 
   Navigator.pop(context);
 

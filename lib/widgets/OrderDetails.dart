@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:recharge_retry/web/ApiMethodes.dart';
 import 'package:recharge_retry/web/apiservices.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
@@ -27,7 +28,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   async {
 
     ApiHelper.showLoaderDialog(context);
-    String ur="https://mysaving.in/IntegraAccount/api/updateInvisibleOrderData.php?timestamp="+new ApiHelper().getRandomnumber();
+    String ur=ApiMethodeCredentials.saveapp_baseurl+ApiMethodeCredentials.updateInvisibleOrderData+"?timestamp="+new ApiHelper().getRandomnumber();
 
     Map<String,String>mp=new HashMap();
 
@@ -200,7 +201,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               }
 
 
-            String ur="https://mysaving.in/IntegraAccount/ecommerce_api/fetchOrderDetails.php?timestamp="+new ApiHelper().getRandomnumber()+"&order_date="+date+"&user_id="+userid;
+            String ur=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.fetchOrderDetails+"?timestamp="+new ApiHelper().getRandomnumber()+"&order_date="+date+"&user_id="+userid;
             ApiHelper.showLoaderDialog(context);
 
 

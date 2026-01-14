@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:recharge_retry/web/ApiMethodes.dart';
 
 import '../domain/ProfileEntity.dart';
 import '../web/apiservices.dart';
@@ -72,7 +73,7 @@ class _SearchListDialogState extends State<SearchListDialog> {
 
                     //getUserDataBYRegid.php
 
-                    String urldata="https://mysaving.in/IntegraAccount/ecommerce_api/getUserDataBYRegid.php?data="+_searchController.text;
+                    String urldata=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getUserDataBYRegid+"?data="+_searchController.text;
 
                     ApiHelper apiHelper=new ApiHelper();
 

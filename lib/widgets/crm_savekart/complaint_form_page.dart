@@ -18,10 +18,12 @@ class ComplaintFormPage extends StatefulWidget {
 class _ComplaintFormPageState extends State<ComplaintFormPage> {
   final orderController = TextEditingController();
   final reasonController = TextEditingController();
+  final personController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text("Complaint")),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -30,7 +32,7 @@ class _ComplaintFormPageState extends State<ComplaintFormPage> {
             TextField(
               controller: orderController,
               decoration: const InputDecoration(
-                labelText: "Order ID",
+                labelText: "Order ID or Phone number",
                 border: OutlineInputBorder(),
               ),
             ),
@@ -45,10 +47,19 @@ class _ComplaintFormPageState extends State<ComplaintFormPage> {
             ),
             const SizedBox(height: 12),
             TextField(
+
+              controller: personController,
+              decoration: const InputDecoration(
+                labelText: "Person who informed",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
               controller: reasonController,
               maxLines: 4,
               decoration: const InputDecoration(
-                labelText: "Enter Reason",
+                labelText: "Enter Details",
                 border: OutlineInputBorder(),
               ),
             ),
@@ -62,6 +73,8 @@ class _ComplaintFormPageState extends State<ComplaintFormPage> {
                       orderId: orderController.text,
                       issue: widget.issue,
                       reason: reasonController.text,
+                      app: widget.app,
+                      person: personController.text,
                     ),
                   ),
                 );

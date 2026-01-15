@@ -7,6 +7,7 @@ import 'package:flutter/material.dart' show debugPrint;
 import 'package:recharge_retry/domain/autopool_count_entity.dart';
 import 'package:recharge_retry/domain/cart_order_details_entity.dart';
 import 'package:recharge_retry/domain/cart_order_entity.dart';
+import 'package:recharge_retry/domain/complaint_list_entity.dart';
 import 'package:recharge_retry/domain/recharge_list_entity.dart';
 import 'package:recharge_retry/domain/update_status_entity.dart';
 import 'package:recharge_retry/dth_recharge/pack_list_entity.dart';
@@ -177,6 +178,14 @@ class JsonConvert {
       return data.map<CartOrderDataOrderitemdata>((Map<String, dynamic> e) =>
           CartOrderDataOrderitemdata.fromJson(e)).toList() as M;
     }
+    if (<ComplaintListEntity>[] is M) {
+      return data.map<ComplaintListEntity>((Map<String, dynamic> e) =>
+          ComplaintListEntity.fromJson(e)).toList() as M;
+    }
+    if (<ComplaintListData>[] is M) {
+      return data.map<ComplaintListData>((Map<String, dynamic> e) =>
+          ComplaintListData.fromJson(e)).toList() as M;
+    }
     if (<RechargeListEntity>[] is M) {
       return data.map<RechargeListEntity>((Map<String, dynamic> e) =>
           RechargeListEntity.fromJson(e)).toList() as M;
@@ -247,6 +256,8 @@ class JsonConvertClassCollection {
     (CartOrderDataOrderdata).toString(): CartOrderDataOrderdata.fromJson,
     (CartOrderDataOrderitemdata).toString(): CartOrderDataOrderitemdata
         .fromJson,
+    (ComplaintListEntity).toString(): ComplaintListEntity.fromJson,
+    (ComplaintListData).toString(): ComplaintListData.fromJson,
     (RechargeListEntity).toString(): RechargeListEntity.fromJson,
     (RechargeListData).toString(): RechargeListData.fromJson,
     (UpdateStatusEntity).toString(): UpdateStatusEntity.fromJson,

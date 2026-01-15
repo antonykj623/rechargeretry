@@ -32,5 +32,9 @@ class ApiMethodeCredentials{
   static String updateAutopoolCount="updateAutopoolCount.php";
   static String getWalletPointsOffice="getWalletPointsOffice.php";
   static String getWalletPointsTransactionOffice="getWalletPointsTransactionOffice.php";
+  static String getCRMComplainList="getCRMComplainList.php";
+  static String addNewCRMComplaint="addNewCRMComplaint.php";
+  static String updateCRMStatus="updateCRMStatus.php";
+  static String updateCRMDEtails="updateCRMDEtails.php";
 
 }

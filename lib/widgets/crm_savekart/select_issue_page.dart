@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'IssueSelectiondialog.dart';
 import 'complaint_form_page.dart';
 
 class SelectIssuePage extends StatefulWidget {
@@ -10,6 +11,8 @@ class SelectIssuePage extends StatefulWidget {
 }
 
 class _SelectIssuePageState extends State<SelectIssuePage> {
+
+  List<String>appquestions=[];
   final issues = [
     "Order Not Found",
     "Change User",
@@ -20,7 +23,28 @@ class _SelectIssuePageState extends State<SelectIssuePage> {
     "Any Other",
   ];
 
+  final issues_saveapp = [
+    "Recharge issue",
+
+    "Any Other",
+  ];
+
   String? selectedIssue;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if(widget.app.compareTo("SaveKart")==0)
+      {
+        appquestions=issues;
+      }
+    else{
+
+      appquestions=issues_saveapp;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +54,7 @@ class _SelectIssuePageState extends State<SelectIssuePage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            ...issues.map((e) => RadioListTile(
+            ...appquestions.map((e) => RadioListTile(
               title: Text(e),
               value: e,
               groupValue: selectedIssue,
@@ -42,16 +66,50 @@ class _SelectIssuePageState extends State<SelectIssuePage> {
             ElevatedButton(
               onPressed: selectedIssue == null
                   ? null
-                  : () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => ComplaintFormPage(
-                      app: widget.app,
-                      issue: selectedIssue!,
+                  : () async {
+
+                if(selectedIssue.toString().compareTo("Recharge issue")==0)
+                {
+
+                  final result = await Navigator.push<String>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const IssueSelectionPage(),
                     ),
-                  ),
-                );
+                  );
+
+                  if (result != null) {
+                    print("Selected Issue: $result");
+
+                   selectedIssue=selectedIssue.toString()+": "+result.toString();
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            ComplaintFormPage(
+                              app: widget.app,
+                              issue: selectedIssue!,
+                            ),
+                      ),
+                    );
+
+                  }
+
+
+                }
+                else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          ComplaintFormPage(
+                            app: widget.app,
+                            issue: selectedIssue!,
+                          ),
+                    ),
+                  );
+                }
               },
               child: const Text("Next"),
             )

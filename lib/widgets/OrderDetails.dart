@@ -108,6 +108,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
                 const SizedBox(height: 20),
 
+
                 /// 🔹 Close Button
                 Align(
                   alignment: Alignment.centerRight,
@@ -226,6 +227,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            _sectionTitle("User Details"),
+            _row("User Name", order["full_name"] ?? "-"),
+            _row("Reg Code", order["reg_code"]),
+
+            const SizedBox(height: 20),
 
             /// 🔹 Order Summary
             _sectionTitle("Order Summary"),
@@ -258,25 +264,27 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
             const SizedBox(height: 30),
 
+
+
             /// 🔹 Status Badge
-            Center(
-              child: Container(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.green.shade100,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: const Text(
-                  "Order Successful",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: Container(
+            //     padding:
+            //     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            //     decoration: BoxDecoration(
+            //       color: Colors.green.shade100,
+            //       borderRadius: BorderRadius.circular(30),
+            //     ),
+            //     child: const Text(
+            //       "Order Successful",
+            //       style: TextStyle(
+            //         color: Colors.green,
+            //         fontWeight: FontWeight.bold,
+            //         fontSize: 14,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

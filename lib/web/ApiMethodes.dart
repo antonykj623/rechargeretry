@@ -36,5 +36,6 @@ class ApiMethodeCredentials{
   static String addNewCRMComplaint="addNewCRMComplaint.php";
   static String updateCRMStatus="updateCRMStatus.php";
   static String updateCRMDEtails="updateCRMDEtails.php";
+  static String userLoginForStaff="userLoginForStaff.php";
 
 }

@@ -85,11 +85,11 @@ class _ComplaintListPageState extends State<ComplaintListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Complaints list",style: TextStyle(fontSize: 18),),
+        title:  Text("Complaints list",style: TextStyle(fontSize: 16),),
         centerTitle: true,
         actions: [
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(5),
             child: IconButton(onPressed: (){
 
               getComplaintList(selectedDate!);
@@ -97,7 +97,7 @@ class _ComplaintListPageState extends State<ComplaintListPage> {
             }, icon: Icon(Icons.refresh,size: 25,)),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(5),
             child: TextButton(
               onPressed: () {
                 Navigator.push(

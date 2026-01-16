@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recharge_retry/dth_recharge/d_t_h_recharge_dashboard.dart';
 import 'package:recharge_retry/dth_recharge/report/rechargereport.dart';
+import 'package:recharge_retry/widgets/loginpage.dart';
+import 'package:recharge_retry/widgets/native_prefs.dart';
 import 'package:recharge_retry/widgets/recharge_list_screen.dart';
 import 'package:recharge_retry/widgets/service_dashboard.dart';
 
@@ -56,13 +58,38 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   redirectToRechargeList()
-  {
+  async {
+
+    String? token=await NativePrefs.getValue("Token");
+
+
 
     Future.delayed(Duration(seconds: 3),() {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => SaveAppServicesScreen()),
-      );
+      if(token!=null)
+      {
+        if(!token.toString().isEmpty)
+        {
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => SaveAppServicesScreen()),
+          );
+        }
+        else{
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        }
+
+      }
+      else{
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      }
 
     },);
 

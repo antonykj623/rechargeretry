@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:recharge_retry/domain/autopool_count_entity.dart';
 import 'package:recharge_retry/web/ApiMethodes.dart';
+import 'package:recharge_retry/widgets/loginpage.dart';
 import 'package:recharge_retry/widgets/recharge_list_screen.dart';
 import 'package:recharge_retry/widgets/save_kart_orders.dart';
 import 'package:recharge_retry/widgets/searchuser.dart';
@@ -86,6 +87,39 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
     super.dispose();
   }
 
+  Future<bool?> showConfirmationDialog({
+    required BuildContext context,
+    String title = "Confirm",
+    String message = "Are you sure?",
+    String yesText = "Yes",
+    String noText = "No",
+  }) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text(noText),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: Text(yesText),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +132,40 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
 
 
 
-        title: const Text("SAVE APP Settings"),
+        title: const Text("SAVE APP Settings",style: TextStyle(fontSize: 15),),
         centerTitle: true,
+
+        actions: [
+
+          Padding(padding: EdgeInsets.all(5),
+
+            child: TextButton(onPressed: () async {
+
+
+
+              bool? confirmed = await showConfirmationDialog(
+                context: context,
+                title: "Logout",
+                message: "Do you really want to logout ?",
+                yesText: "Yes",
+                noText: "No",
+              );
+
+              if (confirmed == true) {
+                // Perform delete action
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder:
+                        (context) =>
+                        LoginPage()
+                    )
+                );
+              }
+
+
+            }, child: Text("Logout",style: TextStyle(fontSize: 16),)),
+
+          )
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

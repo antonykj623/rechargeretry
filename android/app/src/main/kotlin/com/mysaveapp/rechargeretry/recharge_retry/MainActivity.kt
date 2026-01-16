@@ -7,9 +7,11 @@ import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
+import android.content.Context
 class MainActivity: FlutterActivity(){
     private val PREF_CHANNEL = "native_prefs"
     private val URL_CHANNEL = "native_url_launcher"
+    private val CHANNEL = "native_prefs"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine)
@@ -50,5 +52,29 @@ class MainActivity: FlutterActivity(){
                 result.notImplemented()
             }
         }
+
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
+            .setMethodCallHandler { call, result ->
+                val prefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+                when (call.method) {
+                    "save" -> {
+                        val key = call.argument<String>("key")!!
+                        val value = call.argument<String>("value")!!
+                        prefs.edit().putString(key, value).apply()
+                        result.success(true)
+                    }
+
+                    "get" -> {
+                        val key = call.argument<String>("key")!!
+                        val value = prefs.getString(key, null)
+                        result.success(value)
+                    }
+
+                    else -> result.notImplemented()
+                }
+            }
+
     }
 }

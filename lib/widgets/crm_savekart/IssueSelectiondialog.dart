@@ -46,24 +46,45 @@ class _IssueSelectionPageState extends State<IssueSelectionPage> {
                 );
               }).toList(),
             ),
+            flex: 2,
           ),
 
           /// 🔹 Submit Button
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: selectedIssue.isEmpty
-                    ? null
-                    : () {
-                  Navigator.pop(context, selectedIssue);
-                },
-                child: const Text("Submit"),
-              ),
-            ),
-          ),
+          ///
+          ///
+          ///
+          ///
+          Expanded(child: Stack(
+    children: [
+      Align(
+    alignment: FractionalOffset.center,
+
+    child:  Padding(
+      padding: const EdgeInsets.all(16),
+      child: SizedBox(
+        width: double.infinity,
+        height: 48,
+        child: ElevatedButton(
+          onPressed: selectedIssue.isEmpty
+              ? null
+              : () {
+            Navigator.pop(context, selectedIssue);
+          },
+          child: const Text("Submit"),
+        ),
+      ),
+    ),
+    )
+    ],
+    )
+
+
+
+         ,flex: 1, )
+
+
+
+         ,
         ],
       ),
     );

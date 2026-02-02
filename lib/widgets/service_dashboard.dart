@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 
@@ -18,6 +19,7 @@ import '../web/nativeurllauncher.dart';
 import 'OrderDetails.dart';
 import 'crm_savekart/complaint_list.dart';
 import 'crm_savekart/select_app_page.dart';
+import 'dialogbox/nameboxdialog.dart';
 import 'dialogbox/searchorder.dart';
 
 
@@ -33,7 +35,7 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
 
 
 
-  List<String>saveappkarticons=["Recharge","Wallet","Purchase Points","Invisible orders","Order List","BBPS Report","Change Order's User","Add new Address","Create new order","Register Complaints"];
+  List<String>saveappkarticons=["Recharge","Wallet","Purchase Points","Invisible orders","Order List","BBPS Report","Change Order's User","Add new Address","Create new order","Register Complaints","Calling bell"];
 
   List<IconData> saveappkartIconData = [
     Icons.phone_android,        // Recharge
@@ -45,7 +47,8 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
     Icons.swap_horiz,           // Change Order's User
     Icons.location_on,          // Add new Address
     Icons.add_box,
-    Icons.report_gmailerrorred// Create new order
+    Icons.report_gmailerrorred,
+    Icons.notifications_active_rounded// Create new order
   ];
 
 
@@ -71,7 +74,7 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
     Icons.manage_accounts,     // My Save Admin
   ];
 
-
+  Timer? _timer;
   @override
   void initState() {
     // TODO: implement initState
@@ -364,6 +367,34 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
 
 
                       }
+                    else if (index==10) {
+
+                      List<String> names = [
+                        "Sunitha",
+                        "Prashanth",
+                        "Narayanan Kutty",
+
+                      ];
+
+                      String? selected = await showNameListDialog(context, names);
+
+                      if (selected != null) {
+                        print("Selected name: $selected");
+
+//callCollegue.php
+
+                        for(int i=0;i<3;i++) {
+                          ApiHelper apihelper = new ApiHelper();
+                          String urldata = ApiMethodeCredentials
+                              .ecommerce_baseurl +
+                              ApiMethodeCredentials.callCollegue+"name="+selected+"&q="+apihelper.getRandomnumber();
+
+
+
+                          String result=await apihelper.getApiResponse(urldata);
+                        }
+                      }
+                    }
 
                   },
                 )
@@ -771,6 +802,17 @@ updateProCount(usedcount, availablecount, totalcount, info['reg_id']);
             )
           ],
         );
+      },
+    );
+  }
+  Future<String?> showNameListDialog(
+      BuildContext context,
+      List<String> names,
+      ) {
+    return showDialog<String>(
+      context: context,
+      builder: (context) {
+        return NameListDialog(names: names);
       },
     );
   }

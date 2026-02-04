@@ -199,7 +199,7 @@ if(rechargeListEntity.status==1)
                       // User can't manually edit
                       decoration: InputDecoration(
 
-                        labelText: "Mobile number",
+                        labelText: "Mobile number or order id",
                         border: OutlineInputBorder(),
                       ),
                       onChanged: (txt){
@@ -210,7 +210,7 @@ if(rechargeListEntity.status==1)
                                 .where((item) =>
                                 item.accountNumber.toString()
                                     .toLowerCase()
-                                    .contains(txt.toLowerCase())
+                                    .contains(txt.toLowerCase()) || item.id.toString().toLowerCase().contains(txt.toLowerCase())
                             )
                                 .toList();
                           });

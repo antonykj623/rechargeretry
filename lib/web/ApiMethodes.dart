@@ -38,5 +38,7 @@ class ApiMethodeCredentials{
   static String updateCRMDEtails="updateCRMDEtails.php";
   static String userLoginForStaff="userLoginForStaff.php";
   static String callCollegue="callCollegue.php";
+  static String getProtrackerNotInvoice="getProtrackerNotInvoice.php";
+  static String createInvoiceByUpdateStatus="createInvoiceByUpdateStatus.php";
 
 }

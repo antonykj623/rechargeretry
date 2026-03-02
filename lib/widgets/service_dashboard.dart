@@ -9,6 +9,7 @@ import 'package:recharge_retry/widgets/loginpage.dart';
 import 'package:recharge_retry/widgets/recharge_list_screen.dart';
 import 'package:recharge_retry/widgets/save_kart_orders.dart';
 import 'package:recharge_retry/widgets/searchuser.dart';
+import 'package:recharge_retry/widgets/update_order_to_invoice.dart';
 import 'package:recharge_retry/widgets/wallet_balance.dart';
 import 'package:recharge_retry/widgets/wallet_points.dart';
 
@@ -38,6 +39,8 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
   List<String>saveappkarticons=["Recharge","Wallet","Purchase Points","Invisible orders","Order List","BBPS Report","Change Order's User","Add new Address","Create new order","Register Complaints","Calling bell"];
 
   List<IconData> saveappkartIconData = [
+
+
     Icons.phone_android,        // Recharge
     Icons.account_balance_wallet, // Wallet
     Icons.shopping_cart,        // Purchase Points
@@ -52,9 +55,12 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
   ];
 
 
-  List<String>saveappProcount=["Auto Pool Pro Count"];
+  List<String>saveappProcount=["Auto Pool Pro Count","Convert to Invoice"];
   List<IconData> saveappProcountIcons = [
-    Icons.auto_graph, // Auto Pool Count List
+    Icons.auto_graph,
+    Icons.update
+
+    // Auto Pool Count List
   ];
 
 
@@ -219,7 +225,10 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
 // "Order List","BBPS Report","Change Order's User",
 // "Add new Address","Create new order"];
 
-                    if(index==0)
+
+
+
+                   if(index==0)
                       {
                         Navigator.push(
                           context,
@@ -438,21 +447,30 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
                   ),
                   onTap: () async {
 
-                    final selectedItem = await showDialog(
-                      context: context,
-                      builder: (context) => SearchListDialog(),
-                    );
 
-                    if (selectedItem != null) {
+                    if(index==0) {
+                      final selectedItem = await showDialog(
+                        context: context,
+                        builder: (context) => SearchListDialog(),
+                      );
 
-                      UserData usr=selectedItem as UserData;
-
-
-                      showAvailableCount(usr);
+                      if (selectedItem != null) {
+                        UserData usr = selectedItem as UserData;
 
 
-
+                        showAvailableCount(usr);
+                      }
                     }
+                    else if(index==1)
+                      {
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UpdateOrderToInvoice()),
+                        );
+                      }
+
+
 
                   },
                 )

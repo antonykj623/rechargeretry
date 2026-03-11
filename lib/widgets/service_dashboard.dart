@@ -18,10 +18,12 @@ import '../domain/ProfileEntity.dart';
 import '../web/apiservices.dart';
 import '../web/nativeurllauncher.dart';
 import 'OrderDetails.dart';
+import 'changecountry.dart';
 import 'crm_savekart/complaint_list.dart';
 import 'crm_savekart/select_app_page.dart';
 import 'dialogbox/nameboxdialog.dart';
 import 'dialogbox/searchorder.dart';
+import 'kycform.dart';
 
 
 class SaveAppServicesScreen extends StatefulWidget {
@@ -36,7 +38,7 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
 
 
 
-  List<String>saveappkarticons=["Recharge","Wallet","Purchase Points","Invisible orders","Order List","BBPS Report","Change Order's User","Add new Address","Create new order","Register Complaints","Calling bell"];
+  List<String>saveappkarticons=["Recharge","Wallet","Purchase Points","Invisible orders","Order List","BBPS Report","Change Order's User","Add new Address","Create new order","Register Complaints","Change Country","KYC Form"];
 
   List<IconData> saveappkartIconData = [
 
@@ -51,14 +53,18 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
     Icons.location_on,          // Add new Address
     Icons.add_box,
     Icons.report_gmailerrorred,
-    Icons.notifications_active_rounded// Create new order
+    Icons.change_circle,
+    Icons.pending_actions
+
+    // Create new order
   ];
 
 
-  List<String>saveappProcount=["Auto Pool Pro Count","Convert to Invoice"];
+  List<String>saveappProcount=["Auto Pool Pro Count","Convert to Invoice","Save App Events"];
   List<IconData> saveappProcountIcons = [
     Icons.auto_graph,
-    Icons.update
+    Icons.update,
+    Icons.event
 
     // Auto Pool Count List
   ];
@@ -284,15 +290,10 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
                         );
 
 
-
-
-
-
-
-
-
-
                       }
+
+
+
                     }
                     else if(index==3)
                       {
@@ -378,32 +379,55 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
                       }
                     else if (index==10) {
 
-                      List<String> names = [
-                        "Sunitha",
-                        "Prashanth",
-                        "Narayanan Kutty",
 
-                      ];
+                     final selectedItem = await showDialog(
+                       context: context,
+                       builder: (context) => SearchListDialog(),
+                     );
 
-                      String? selected = await showNameListDialog(context, names);
+                     if (selectedItem != null) {
 
-                      if (selected != null) {
-                        print("Selected name: $selected");
+                       UserData usr=selectedItem as UserData;
 
-//callCollegue.php
+                       //wallet balance
 
-                        for(int i=0;i<3;i++) {
-                          ApiHelper apihelper = new ApiHelper();
-                          String urldata = ApiMethodeCredentials
-                              .ecommerce_baseurl +
-                              ApiMethodeCredentials.callCollegue+"name="+selected+"&q="+apihelper.getRandomnumber();
+//CountryStateForm
 
+                       Navigator.push(
+                         context,
+                         MaterialPageRoute(builder: (context) => CountryStateForm(usr)),
+                       );
 
 
-                          String result=await apihelper.getApiResponse(urldata);
-                        }
-                      }
+                     }
+
+
+
                     }
+                    else if(index==11){
+
+                     final selectedItem = await showDialog(
+                       context: context,
+                       builder: (context) => SearchListDialog(),
+                     );
+
+                     if (selectedItem != null) {
+
+                       UserData usr=selectedItem as UserData;
+
+                       //wallet balance
+
+//CountryStateForm
+
+                       Navigator.push(
+                         context,
+                         MaterialPageRoute(builder: (context) => KYCForm(usr)),
+                       );
+
+
+                     }
+
+                   }
 
                   },
                 )
@@ -468,6 +492,11 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
                           context,
                           MaterialPageRoute(builder: (context) => UpdateOrderToInvoice()),
                         );
+                      }
+                    else if(index==2)
+                      {
+
+
                       }
 
 

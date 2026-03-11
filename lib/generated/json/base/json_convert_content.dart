@@ -9,6 +9,8 @@ import 'package:recharge_retry/domain/autopool_count_entity.dart';
 import 'package:recharge_retry/domain/cart_order_details_entity.dart';
 import 'package:recharge_retry/domain/cart_order_entity.dart';
 import 'package:recharge_retry/domain/complaint_list_entity.dart';
+import 'package:recharge_retry/domain/country_list_entity.dart';
+import 'package:recharge_retry/domain/k_y_c_details_entity.dart';
 import 'package:recharge_retry/domain/recharge_list_entity.dart';
 import 'package:recharge_retry/domain/update_status_entity.dart';
 import 'package:recharge_retry/dth_recharge/pack_list_entity.dart';
@@ -195,6 +197,26 @@ class JsonConvert {
       return data.map<ComplaintListData>((Map<String, dynamic> e) =>
           ComplaintListData.fromJson(e)).toList() as M;
     }
+    if (<CountryListEntity>[] is M) {
+      return data.map<CountryListEntity>((Map<String, dynamic> e) =>
+          CountryListEntity.fromJson(e)).toList() as M;
+    }
+    if (<CountryListData>[] is M) {
+      return data.map<CountryListData>((Map<String, dynamic> e) =>
+          CountryListData.fromJson(e)).toList() as M;
+    }
+    if (<CountryListDataData>[] is M) {
+      return data.map<CountryListDataData>((Map<String, dynamic> e) =>
+          CountryListDataData.fromJson(e)).toList() as M;
+    }
+    if (<KYCDetailsEntity>[] is M) {
+      return data.map<KYCDetailsEntity>((Map<String, dynamic> e) =>
+          KYCDetailsEntity.fromJson(e)).toList() as M;
+    }
+    if (<KYCDetailsData>[] is M) {
+      return data.map<KYCDetailsData>((Map<String, dynamic> e) =>
+          KYCDetailsData.fromJson(e)).toList() as M;
+    }
     if (<RechargeListEntity>[] is M) {
       return data.map<RechargeListEntity>((Map<String, dynamic> e) =>
           RechargeListEntity.fromJson(e)).toList() as M;
@@ -270,6 +292,11 @@ class JsonConvertClassCollection {
         .fromJson,
     (ComplaintListEntity).toString(): ComplaintListEntity.fromJson,
     (ComplaintListData).toString(): ComplaintListData.fromJson,
+    (CountryListEntity).toString(): CountryListEntity.fromJson,
+    (CountryListData).toString(): CountryListData.fromJson,
+    (CountryListDataData).toString(): CountryListDataData.fromJson,
+    (KYCDetailsEntity).toString(): KYCDetailsEntity.fromJson,
+    (KYCDetailsData).toString(): KYCDetailsData.fromJson,
     (RechargeListEntity).toString(): RechargeListEntity.fromJson,
     (RechargeListData).toString(): RechargeListData.fromJson,
     (UpdateStatusEntity).toString(): UpdateStatusEntity.fromJson,

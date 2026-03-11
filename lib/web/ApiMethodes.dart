@@ -40,5 +40,9 @@ class ApiMethodeCredentials{
   static String callCollegue="callCollegue.php";
   static String getProtrackerNotInvoice="getProtrackerNotInvoice.php";
   static String createInvoiceByUpdateStatus="createInvoiceByUpdateStatus.php";
+  static String getEventList="getEventList.php";
+  static String getCountryWithState="getCountryWithState.php";
+  static String updateStateCountry="updateStateCountry.php";
+  static String getKYCDetails="getKYCDetails.php";
 
 }

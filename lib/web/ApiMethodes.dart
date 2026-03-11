@@ -8,6 +8,7 @@ class ApiMethodeCredentials{
 
   static String saveapp_rechargebaseurl="https://mysaving.in/easyrecharge/paymentgateway/";
 
+  static String photoproof_baseurl="https://mysaving.in/uploads/proof/";
 
 
   static String getAddressByidoffice="getAddressByidoffice.php";

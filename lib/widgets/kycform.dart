@@ -38,6 +38,8 @@ class _KYCFormState extends State<KYCForm> {
   File? panImage;
   File? passbookImage;
 
+  String adhaarimage="",panimage="",passbookimage="";
+
   Future pickAndCropImage(String type) async {
 
     final picked = await picker.pickImage(source: ImageSource.gallery);
@@ -399,7 +401,9 @@ class _KYCFormState extends State<KYCForm> {
            bankController.text=entity.data!.bankName.toString();
            branchController.text=entity.data!.branchName.toString();
            ifscController.text=entity.data!.ifsc.toString();
-
+           adhaarimage=ApiMethodeCredentials.photoproof_baseurl+entity.data!.adharPhoto.toString();
+          passbookimage=ApiMethodeCredentials.photoproof_baseurl+entity.data!.bankCheckleafPhoto.toString();
+          panimage=ApiMethodeCredentials.photoproof_baseurl+entity.data!.panPhoto.toString();
 
 
         });

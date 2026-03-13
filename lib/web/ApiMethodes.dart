@@ -45,5 +45,8 @@ class ApiMethodeCredentials{
   static String getCountryWithState="getCountryWithState.php";
   static String updateStateCountry="updateStateCountry.php";
   static String getKYCDetails="getKYCDetails.php";
+  static String uploadAdharDetails="uploadAdharDetails.php";
+  static String uploadPanDetails="uploadPanDetails.php";
+  static String uploadAccountDetails="uploadAccountDetails.php";
 
 }

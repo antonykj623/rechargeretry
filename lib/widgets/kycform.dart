@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
+
 import '../domain/ProfileEntity.dart';
 import '../domain/k_y_c_details_entity.dart';
 import '../web/ApiMethodes.dart';
 import '../web/apiservices.dart';
+import 'package:http/http.dart' as http;
+
+import '../web/nativegallery.dart';
+
+
 
 class KYCForm extends StatefulWidget {
 
@@ -24,7 +28,7 @@ class _KYCFormState extends State<KYCForm> {
 
   _KYCFormState(this.usr);
 
-  final picker = ImagePicker();
+
 
   TextEditingController aadhaarController = TextEditingController();
   TextEditingController panController = TextEditingController();
@@ -42,43 +46,25 @@ class _KYCFormState extends State<KYCForm> {
 
   Future pickAndCropImage(String type) async {
 
-    final picked = await picker.pickImage(source: ImageSource.gallery);
 
-    if (picked == null) return;
+      String? imagePath = await NativeCrop.pickAndCrop();
 
-    CroppedFile? cropped = await ImageCropper().cropImage(
-      sourcePath: picked.path,
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Crop Image',
-          toolbarColor: Colors.blue,
-          toolbarWidgetColor: Colors.white,
-        ),
-        IOSUiSettings(
-          title: 'Crop Image',
-        ),
-      ],
-    );
+      if (imagePath != null) {
 
-    if (cropped != null) {
+        setState(() {
+          if (type == "aadhaar") {
+            aadhaarImage = File(imagePath);
+          }
 
-      setState(() {
+          if (type == "pan") {
+            panImage = File(imagePath);
+          }
 
-        if (type == "aadhaar") {
-          aadhaarImage = File(cropped.path);
-        }
-
-        if (type == "pan") {
-          panImage = File(cropped.path);
-        }
-
-        if (type == "passbook") {
-          passbookImage = File(cropped.path);
-        }
-
-      });
-
-    }
+          if (type == "passbook") {
+            passbookImage = File(imagePath);
+          }
+        });
+      }
 
   }
 
@@ -144,6 +130,40 @@ class _KYCFormState extends State<KYCForm> {
     getKYCDetails();
   }
 
+
+  Future confirmDialog(BuildContext context,String message) async {
+
+    return await showDialog(
+      context: context,
+      builder: (context) {
+
+        return AlertDialog(
+          title: Text("Confirm"),
+          content: Text(message),
+          actions: [
+
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context,false);
+              },
+              child: Text("Cancel"),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context,true);
+              },
+              child: Text("Confirm"),
+            ),
+
+          ],
+        );
+
+      },
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -182,7 +202,55 @@ class _KYCFormState extends State<KYCForm> {
 
                     SizedBox(height:15),
 
-                    uploadRow("Upload Aadhaar Photo","aadhaar",aadhaarImage),
+                    (adhaarimage.isNotEmpty)? Stack(
+                      children: [
+
+                        /// Network Image
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                           adhaarimage,
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(Icons.error,size: 100,);
+                            },
+                          ),
+                        ),
+
+                        /// Close Button
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: GestureDetector(
+                            onTap: () {
+
+                              setState(() {
+
+                                adhaarimage="";
+                              });
+
+
+
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black54,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: EdgeInsets.all(5),
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        )
+
+                      ],
+                    )    :   uploadRow("Upload Aadhaar Photo","aadhaar",aadhaarImage),
 
                     SizedBox(height: 20,),
 
@@ -195,9 +263,64 @@ class _KYCFormState extends State<KYCForm> {
                             backgroundColor: Colors.blue
                         ),
 
-                        onPressed: (){
+                        onPressed: () async {
 
 
+                          bool confirm = await confirmDialog(context,"Submit KYC details?");
+
+                          if(confirm) {
+                            print("Proceed API");
+
+
+                            ApiHelper.showLoaderDialog(context);
+                            ApiHelper apihelper = new ApiHelper();
+
+
+                            var uri = Uri.parse(
+                                ApiMethodeCredentials.ecommerce_baseurl +
+                                    ApiMethodeCredentials.uploadAdharDetails +
+                                    "?q=" + apihelper.getRandomnumber());
+
+                            var request = http.MultipartRequest('POST', uri);
+
+                            /// Text field
+                            request.fields['aadhaar_number'] =
+                                aadhaarController.text;
+                            request.fields['user_id'] = usr.id;
+
+                            if(adhaarimage.isNotEmpty) {
+                              request.fields['image_exists'] = "1";
+                            }
+                            else{
+                              request.fields['image_exists'] = "0";
+
+                            }
+
+                            /// Image file
+                            ///
+                            ///
+                            ///
+                            if (aadhaarImage != null) {
+                              request.files.add(
+                                await http.MultipartFile.fromPath(
+                                  'aadhaar_image',
+                                  aadhaarImage!.path,
+                                ),
+                              );
+                            }
+
+                            var response = await request.send();
+                            Navigator.pop(context);
+                            getKYCDetails();
+
+                            if (response.statusCode == 200) {
+
+
+
+                            } else {
+                              print("Upload failed");
+                            }
+                          }
 
                         },
 
@@ -233,7 +356,55 @@ class _KYCFormState extends State<KYCForm> {
 
                     SizedBox(height:15),
 
-                    uploadRow("Upload PAN Photo","pan",panImage),
+                    (panimage.isNotEmpty)? Stack(
+                      children: [
+
+                        /// Network Image
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            panimage,
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(Icons.error,size: 100,);
+                            },
+                          ),
+                        ),
+
+                        /// Close Button
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: GestureDetector(
+                            onTap: () {
+
+                              setState(() {
+
+                                panimage="";
+                              });
+
+
+
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black54,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: EdgeInsets.all(5),
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        )
+
+                      ],
+                    )    :   uploadRow("Upload PAN Photo","pan",panImage),
 
                     SizedBox(height: 20,),
 
@@ -246,9 +417,62 @@ class _KYCFormState extends State<KYCForm> {
                             backgroundColor: Colors.blue
                         ),
 
-                        onPressed: (){
+                        onPressed: () async {
+
+                          bool confirm = await confirmDialog(context,"Submit KYC details?");
+
+                          if(confirm) {
+                            print("Proceed API");
 
 
+                            ApiHelper.showLoaderDialog(context);
+                            ApiHelper apihelper = new ApiHelper();
+
+
+                            var uri = Uri.parse(
+                                ApiMethodeCredentials.ecommerce_baseurl +
+                                    ApiMethodeCredentials.uploadPanDetails +
+                                    "?q=" + apihelper.getRandomnumber());
+
+                            var request = http.MultipartRequest('POST', uri);
+
+                            /// Text field
+                            request.fields['pan_number'] =
+                                panController.text;
+                            request.fields['user_id'] = usr.id;
+
+                            if(panimage.isNotEmpty) {
+                              request.fields['image_exists'] = "1";
+                            }
+                            else{
+                              request.fields['image_exists'] = "0";
+
+                            }
+
+                            /// Image file
+                            ///
+                            ///
+                            ///
+                            if (panImage != null) {
+                              request.files.add(
+                                await http.MultipartFile.fromPath(
+                                  'pan_image',
+                                  panImage!.path,
+                                ),
+                              );
+                            }
+
+                            var response = await request.send();
+                            Navigator.pop(context);
+                            getKYCDetails();
+                            if (response.statusCode == 200) {
+
+
+
+                            } else {
+                              print("Upload failed");
+                            }
+                          }
 
                         },
 
@@ -325,7 +549,55 @@ class _KYCFormState extends State<KYCForm> {
 
                     SizedBox(height:15),
 
-                    uploadRow("Upload Passbook Photo","passbook",passbookImage),
+                    (passbookimage.isNotEmpty)? Stack(
+                      children: [
+
+                        /// Network Image
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            passbookimage,
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(Icons.error,size: 100,);
+                            },
+                          ),
+                        ),
+
+                        /// Close Button
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: GestureDetector(
+                            onTap: () {
+
+                              setState(() {
+
+                                passbookimage="";
+                              });
+
+
+
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black54,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: EdgeInsets.all(5),
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        )
+
+                      ],
+                    )    :   uploadRow("Upload Passbook Photo","passbook",passbookImage),
                     SizedBox(height: 20,),
 
                     SizedBox(
@@ -338,7 +610,74 @@ class _KYCFormState extends State<KYCForm> {
                           backgroundColor: Colors.blue
                         ),
 
-                        onPressed: (){
+                        onPressed: () async {
+
+                          bool confirm = await confirmDialog(context,"Submit KYC details?");
+
+                          if(confirm) {
+                            print("Proceed API");
+
+
+                            ApiHelper.showLoaderDialog(context);
+                            ApiHelper apihelper = new ApiHelper();
+
+
+                            var uri = Uri.parse(
+                                ApiMethodeCredentials.ecommerce_baseurl +
+                                    ApiMethodeCredentials.uploadAccountDetails +
+                                    "?q=" + apihelper.getRandomnumber());
+
+                            var request = http.MultipartRequest('POST', uri);
+
+                            /// Text field
+                            request.fields['account_no'] =
+                                accountController.text;
+                            request.fields['holder']=holderController.text;
+                            request.fields['branch'] =
+                                branchController.text;
+                            request.fields['bank_name']=bankController.text;
+                            request.fields['ifsc']=ifscController.text;
+                            request.fields['user_id'] = usr.id;
+
+
+
+                            if(passbookimage.isNotEmpty) {
+                              request.fields['image_exists'] = "1";
+                            }
+                            else{
+                              request.fields['image_exists'] = "0";
+
+                            }
+
+                            /// Image file
+                            ///
+                            ///
+                            ///
+                            if (passbookImage != null) {
+                              request.files.add(
+                                await http.MultipartFile.fromPath(
+                                'passbook_image',
+                                passbookImage!.path,
+                              ),
+                          );
+                          }
+
+                          var response = await request.send();
+                          Navigator.pop(context);
+                          getKYCDetails();
+                          if (response.statusCode == 200) {
+
+
+
+                          } else {
+                          print("Upload failed");
+                          }
+                        }
+
+
+
+
+
 
 
 
@@ -401,11 +740,19 @@ class _KYCFormState extends State<KYCForm> {
            bankController.text=entity.data!.bankName.toString();
            branchController.text=entity.data!.branchName.toString();
            ifscController.text=entity.data!.ifsc.toString();
-           adhaarimage=ApiMethodeCredentials.photoproof_baseurl+entity.data!.adharPhoto.toString();
-          passbookimage=ApiMethodeCredentials.photoproof_baseurl+entity.data!.bankCheckleafPhoto.toString();
-          panimage=ApiMethodeCredentials.photoproof_baseurl+entity.data!.panPhoto.toString();
+           if(entity.data!.adharPhoto.toString().isNotEmpty) {
+             adhaarimage = ApiMethodeCredentials.photoproof_baseurl +
+                 entity.data!.adharPhoto.toString();
+           }
+          if(entity.data!.bankCheckleafPhoto.toString().isNotEmpty) {
+            passbookimage = ApiMethodeCredentials.photoproof_baseurl +
+                entity.data!.bankCheckleafPhoto.toString();
+          }
 
-
+          if(entity.data!.panPhoto.toString().isNotEmpty) {
+            panimage = ApiMethodeCredentials.photoproof_baseurl +
+                entity.data!.panPhoto.toString();
+          }
         });
       }
     else

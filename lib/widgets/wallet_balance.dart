@@ -60,7 +60,7 @@ class _WalletBalanceState extends State<WalletBalance> {
 
           IconButton(icon: Icon(Icons.add,color: Colors.white,), onPressed: () {
 
-            showAmountDialog(context, (amount) async {
+            showAmountDialog(context, (amount,remarks) async {
               print("User entered: ₹$amount");
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("You entered ₹$amount")),
@@ -72,7 +72,7 @@ class _WalletBalanceState extends State<WalletBalance> {
                 ApiHelper.showLoaderDialog(context);
               });
 
-              Map<String,String>mp={"user_id":userd.id,"amount":amount,"purpose":"Add"};
+              Map<String,String>mp={"user_id":userd.id,"amount":amount,"purpose":"Add","remarks":remarks};
 
               ApiHelper apiHelper=new ApiHelper();
 
@@ -99,7 +99,7 @@ class _WalletBalanceState extends State<WalletBalance> {
 
           IconButton(icon: Icon(Icons.remove,color: Colors.white,), onPressed: () {
 
-            showAmountDialog(context, (amount) async {
+            showAmountDialog(context, (amount,remarks) async {
               print("User entered: ₹$amount");
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("You entered ₹$amount")),
@@ -111,7 +111,7 @@ class _WalletBalanceState extends State<WalletBalance> {
                 ApiHelper.showLoaderDialog(context);
               });
 
-              Map<String,String>mp={"user_id":userd.id,"amount":amount,"purpose":"Reduce"};
+              Map<String,String>mp={"user_id":userd.id,"amount":amount,"purpose":"Reduce","remarks":remarks};
 
               ApiHelper apiHelper=new ApiHelper();
 
@@ -183,7 +183,7 @@ class _WalletBalanceState extends State<WalletBalance> {
                       style: TextStyle(color: Colors.red, fontSize: 15),
                     ),
                     title: Text(data![index]!.description.toString()),
-                    subtitle: Text(dateTime.day.toString()+"-"+dateTime.month.toString()+"-"+dateTime.year.toString()),
+                    subtitle: Text(dateTime.day.toString()+"-"+dateTime.month.toString()+"-"+dateTime.year.toString()+"\nWallet Balance : "+data![index].balance),
 
                   ) ,
                   elevation: 5,
@@ -212,8 +212,9 @@ class _WalletBalanceState extends State<WalletBalance> {
     );
   }
 
-  Future<void> showAmountDialog(BuildContext context, Function(String) onSubmit) async {
+  Future<void> showAmountDialog(BuildContext context, Function(String,String) onSubmit) async {
     final TextEditingController amountController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
 
     await showDialog(
       context: context,
@@ -222,18 +223,39 @@ class _WalletBalanceState extends State<WalletBalance> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          title: Text("Enter Amount"),
-          content: TextField(
-            controller: amountController,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
-            decoration: InputDecoration(
-              hintText: "Enter amount",
-              prefixIcon: Icon(Icons.currency_rupee),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+          title: Text("Wallet Balance"),
+          content: Column(
+            children: [
+
+              TextField(
+                controller: amountController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  hintText: "Enter amount",
+                  prefixIcon: Icon(Icons.currency_rupee),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
               ),
-            ),
+              Container(height: 20,),
+              TextField(
+                controller: descriptionController,
+
+                decoration: InputDecoration(
+                  hintText: "Enter Remarks",
+                  prefixIcon: Icon(Icons.description),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ],
           ),
+
+
+
+
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -242,13 +264,14 @@ class _WalletBalanceState extends State<WalletBalance> {
             ElevatedButton(
               onPressed: () {
                 String value = amountController.text.trim();
+                String remarks=descriptionController.text;
                 if (value.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Please enter an amount")),
                   );
                 } else {
                   Navigator.pop(context);
-                  onSubmit(value); // send back the entered value
+                  onSubmit(value,remarks); // send back the entered value
                 }
               },
               child: const Text("OK"),

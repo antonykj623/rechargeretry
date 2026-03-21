@@ -4,8 +4,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:recharge_retry/domain/autopool_count_entity.dart';
+import 'package:recharge_retry/domain/protracker_entity.dart';
 import 'package:recharge_retry/web/ApiMethodes.dart';
 import 'package:recharge_retry/widgets/loginpage.dart';
+import 'package:recharge_retry/widgets/protracker_details.dart';
 import 'package:recharge_retry/widgets/recharge_list_screen.dart';
 import 'package:recharge_retry/widgets/save_kart_orders.dart';
 import 'package:recharge_retry/widgets/searchuser.dart';
@@ -363,6 +365,51 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
                     else if(index==8)
                       {
 
+                        final selectedItem = await showDialog(
+                          context: context,
+                          builder: (context) => SearchListDialog(),
+                        );
+
+                        if (selectedItem != null) {
+
+                          ApiHelper.showLoaderDialog(context);
+
+                          UserData usr=selectedItem as UserData;
+
+                          //wallet balance
+
+                          ApiHelper apiHelper=new ApiHelper();
+
+                          String urldata=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.getSaveKartDetails+"?data="+apiHelper.getRandomnumber();
+
+
+
+                          String response=await apiHelper.getApiResponse(urldata);
+
+                          Navigator.pop(context);
+
+                          var js= jsonDecode(response) ;
+
+                          ProtrackerEntity pro=ProtrackerEntity.fromJson(js);
+
+                          if(pro.status==1)
+                            {
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ProtrackerDetails(pro,usr)),
+                              );
+
+                            }
+
+
+
+
+
+
+
+
+                        }
 
                       }
                     else if(index==9)

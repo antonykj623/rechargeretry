@@ -10,6 +10,8 @@ class ApiMethodeCredentials{
 
   static String photoproof_baseurl="https://mysaving.in/uploads/proof/";
 
+  static const productimageurl="https://mysaving.in/cart/";
+
 
   static String getAddressByidoffice="getAddressByidoffice.php";
   static String addNewAddress="addNewAddress.php";
@@ -48,5 +50,7 @@ class ApiMethodeCredentials{
   static String uploadAdharDetails="uploadAdharDetails.php";
   static String uploadPanDetails="uploadPanDetails.php";
   static String uploadAccountDetails="uploadAccountDetails.php";
+  static String getSaveKartDetails="getSaveKartDetails.php";
+  static String chekProductExistsOFFice="chekProductExistsOFFice.php";
 
 }

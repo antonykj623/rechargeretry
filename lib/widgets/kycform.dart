@@ -743,15 +743,19 @@ class _KYCFormState extends State<KYCForm> {
            if(entity.data!.adharPhoto.toString().isNotEmpty) {
              adhaarimage = ApiMethodeCredentials.photoproof_baseurl +
                  entity.data!.adharPhoto.toString();
+             aadhaarImage=null;
            }
           if(entity.data!.bankCheckleafPhoto.toString().isNotEmpty) {
             passbookimage = ApiMethodeCredentials.photoproof_baseurl +
                 entity.data!.bankCheckleafPhoto.toString();
+            passbookImage=null;
           }
 
           if(entity.data!.panPhoto.toString().isNotEmpty) {
             panimage = ApiMethodeCredentials.photoproof_baseurl +
                 entity.data!.panPhoto.toString();
+            panImage=null;
+
           }
         });
       }

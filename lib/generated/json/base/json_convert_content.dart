@@ -11,6 +11,7 @@ import 'package:recharge_retry/domain/cart_order_entity.dart';
 import 'package:recharge_retry/domain/complaint_list_entity.dart';
 import 'package:recharge_retry/domain/country_list_entity.dart';
 import 'package:recharge_retry/domain/k_y_c_details_entity.dart';
+import 'package:recharge_retry/domain/protracker_entity.dart';
 import 'package:recharge_retry/domain/recharge_list_entity.dart';
 import 'package:recharge_retry/domain/update_status_entity.dart';
 import 'package:recharge_retry/dth_recharge/pack_list_entity.dart';
@@ -217,6 +218,14 @@ class JsonConvert {
       return data.map<KYCDetailsData>((Map<String, dynamic> e) =>
           KYCDetailsData.fromJson(e)).toList() as M;
     }
+    if (<ProtrackerEntity>[] is M) {
+      return data.map<ProtrackerEntity>((Map<String, dynamic> e) =>
+          ProtrackerEntity.fromJson(e)).toList() as M;
+    }
+    if (<ProtrackerData>[] is M) {
+      return data.map<ProtrackerData>((Map<String, dynamic> e) =>
+          ProtrackerData.fromJson(e)).toList() as M;
+    }
     if (<RechargeListEntity>[] is M) {
       return data.map<RechargeListEntity>((Map<String, dynamic> e) =>
           RechargeListEntity.fromJson(e)).toList() as M;
@@ -297,6 +306,8 @@ class JsonConvertClassCollection {
     (CountryListDataData).toString(): CountryListDataData.fromJson,
     (KYCDetailsEntity).toString(): KYCDetailsEntity.fromJson,
     (KYCDetailsData).toString(): KYCDetailsData.fromJson,
+    (ProtrackerEntity).toString(): ProtrackerEntity.fromJson,
+    (ProtrackerData).toString(): ProtrackerData.fromJson,
     (RechargeListEntity).toString(): RechargeListEntity.fromJson,
     (RechargeListData).toString(): RechargeListData.fromJson,
     (UpdateStatusEntity).toString(): UpdateStatusEntity.fromJson,

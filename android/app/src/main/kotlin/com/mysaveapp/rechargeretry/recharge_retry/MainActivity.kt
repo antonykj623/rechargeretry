@@ -12,6 +12,11 @@ import android.provider.MediaStore
 
 import java.io.File
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
+import androidx.core.app.ActivityCompat
+
 class MainActivity: FlutterActivity() {
 
     private val PREF_CHANNEL = "native_prefs"
@@ -93,12 +98,29 @@ class MainActivity: FlutterActivity() {
 
             if (call.method == "pickImage") {
 
-                cropResult = result
+             if(   ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_MEDIA_IMAGES
+                ) == PackageManager.PERMISSION_GRANTED) {
 
-                val intent = Intent(Intent.ACTION_PICK)
-                intent.type = "image/*"
+                 cropResult = result
 
-                startActivityForResult(intent, PICK_IMAGE)
+                 val intent = Intent(Intent.ACTION_PICK)
+                 intent.type = "image/*"
+
+                 startActivityForResult(intent, PICK_IMAGE)
+             }
+                else{
+
+
+                 ActivityCompat.requestPermissions(
+                     this,
+                     arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                     1001
+                 )
+
+
+             }
 
             } else {
                 result.notImplemented()

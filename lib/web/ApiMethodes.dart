@@ -52,5 +52,6 @@ class ApiMethodeCredentials{
   static String uploadAccountDetails="uploadAccountDetails.php";
   static String getSaveKartDetails="getSaveKartDetails.php";
   static String chekProductExistsOFFice="chekProductExistsOFFice.php";
+  static String addToCartStaff="addToCartStaff.php";
 
 }

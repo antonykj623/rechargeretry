@@ -33,6 +33,8 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
   String walletpoints="0";
 
   bool ispointredeemeed=false;
+  int qty=1;
+  bool isAlreadyexists=false;
 
   _ProtrackerDetailsState(this.pro,this.usr) ;
 
@@ -41,6 +43,7 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
     // TODO: implement initState
     super.initState();
     getWalletPoints();
+    getProductExistsinCart(false);
   }
 
 
@@ -137,13 +140,40 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
           max: 10,
           onChanged: (value) {
             print("Quantity: $value");
+
+            setState(() {
+              qty=value;
+            });
           },
         ),
 
 
 
 
-        Padding(padding: EdgeInsets.all(20),
+        (isAlreadyexists)? Padding(padding: EdgeInsets.all(20),
+
+          child: Container(
+            width: 150,
+            height: 60,
+            color: Colors.blue,
+
+            child: TextButton(onPressed: () async {
+
+
+
+
+
+
+            }, child: Text("Go to Cart",style: TextStyle(fontSize: 16,color: Colors.white),)),
+
+          )
+
+
+
+
+          ,
+
+        )   :  Padding(padding: EdgeInsets.all(20),
 
           child: Container(
     width: 150,
@@ -165,7 +195,7 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
                 wp - ppredemption;
             // AppStorage.setString(AppStorage.current_wallet_point, tempwalletpoints.toString());
             ispointredeemeed = true;
-            getProductExistsinCart();
+            getProductExistsinCart(true);
 
             Navigator.pop(context);
           },
@@ -175,7 +205,7 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
           child: Text("No"),
           onPressed: () {
             ispointredeemeed = false;
-            getProductExistsinCart();
+            getProductExistsinCart(true);
 
             Navigator.pop(context);
           },
@@ -202,7 +232,7 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
         );
       }
       else {
-        getProductExistsinCart();
+        getProductExistsinCart(true);
       }
 
 
@@ -240,9 +270,9 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
     );
   }
 
-  getProductExistsinCart() async {
+  getProductExistsinCart(bool ischeck) async {
 
-    ApiHelper.showLoaderDialog(context);
+
 
     ApiHelper apiHelper=new ApiHelper();
 
@@ -252,14 +282,19 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
 
     var js = jsonDecode(response);
 
-    Navigator.pop(context);
 
     CartDataExistEntity exist = CartDataExistEntity.fromJson(js);
     if (exist.data!.length > 0) {
       ApiHelper.showAlertDialog(context,  "Already added to cart");
+      setState(() {
+        isAlreadyexists=true;
+      });
     }
     else {
+      if(ischeck)
+        {
       addToCart();
+      }
     }
   }
   addToCart()async {
@@ -273,8 +308,9 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
 
     Map<String,String> mp=new HashMap();
     mp['product_id']=pro.data!.productId.toString();
-    mp['quantity']="1";
+    mp['quantity']=qty.toString();
     mp['stockid']=pro.data!.stockid.toString();
+    mp['user_id']=usr.id.toString();
     if(ispointredeemeed)
     {
       mp['points_redeemed']="1";
@@ -285,7 +321,7 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
     }
 
 
-    var response= await  apihelper.postApiResponse(Apimethodes.addProductToCart+"?q="+t.toString(),formDataPayload: mp);
+    var response= await  apihelper.postApiResponse(ApiMethodeCredentials.ecommerce_baseurl+   ApiMethodeCredentials.addToCartStaff+"?q="+t.toString(), mp);
 
     var js= jsonDecode( jsonEncode(response) ) ;
 
@@ -294,7 +330,7 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
     // if(js['status']==1)
     //   {
 
-    getCartCount();
+
 
 
 

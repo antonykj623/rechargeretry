@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../domain/ProfileEntity.dart';
 import '../domain/protracker_entity.dart';
 import '../web/ApiMethodes.dart';
+import '../web/apiservices.dart';
+import 'dialogbox/quatityselector.dart';
 
 class PlaceOrderPro extends StatefulWidget {
 
@@ -24,12 +26,37 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
   UserData usr;
 
   ProtrackerEntity pro;
+  int qty=1;
+
   _PlaceOrderProState(this.usr,this.pro);
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    getProtrackerCart();
+  }
+
+
+  getProtrackerCart()async
+  {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ApiHelper.showLoaderDialog(context);
+    });
+
+    ApiHelper apiHelper=new ApiHelper();
+
+
+String ur=ApiMethodeCredentials.ecommerce_baseurl   +ApiMethodeCredentials.getProtrackerCart+"q="+apiHelper.getRandomnumber();
+
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      Navigator.pop(context);
+    });
+
+
   }
 
 
@@ -37,6 +64,7 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         leading: Padding(padding: EdgeInsets.only(left: 16),
             child:  IconButton(onPressed: (){
 
@@ -59,162 +87,98 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
 
       body: Column(
         children: [
-          Expanded(child: Image.network(ApiMethodeCredentials.productimageurl +
-              pro.data!.primeImage.toString(),width: double.infinity,
-
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child; // Image loaded successfully
-              return Center(child: CircularProgressIndicator()); // Show loader while loading
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return Icon(Icons.image,size: 50,color: Colors.black26,); // Show a local placeholder on error
-            },
-
-            fit: BoxFit.fill,
-
-          ) ,flex: 1,),
 
 
-          Expanded(child: Padding(padding: EdgeInsets.all(15),
+          Expanded(child:   Padding(
+            padding:  EdgeInsets.all(8.0),
+            child: Container(
+              color: Colors.blue[50],
+              width: double.infinity,
+              height: 200,// Background color of the container.
+              child: ListTile(
+                leading:  Image.network(ApiMethodeCredentials.productimageurl +
+                    pro.data!.primeImage.toString(),width:100,height: 100,
 
 
-            // child:    Column(
-            //
-            //   mainAxisAlignment: MainAxisAlignment.start,
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //
-            //   children: [
-            //
-            //     Text("\n\n\nName : "+pro.data!.productName.toString()+"\nDescription : "+pro.data!.productDescription.toString()+"\nProduct. Code : "+pro.data!.productCode.toString(),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),)
-            //
-            //     ,Container(height: 30,),
-            //
-            //     QuantitySelector(
-            //       initialValue: 1,
-            //       min: 1,
-            //       max: 10,
-            //       onChanged: (value) {
-            //         print("Quantity: $value");
-            //
-            //         setState(() {
-            //           qty=value;
-            //         });
-            //       },
-            //     ),
-            //
-            //
-            //
-            //
-            //     (isAlreadyexists)? Padding(padding: EdgeInsets.all(20),
-            //
-            //       child: Container(
-            //         width: 150,
-            //         height: 60,
-            //         color: Colors.blue,
-            //
-            //         child: TextButton(onPressed: () async {
-            //
-            //
-            //
-            //
-            //
-            //
-            //         }, child: Text("Go to Cart",style: TextStyle(fontSize: 16,color: Colors.white),)),
-            //
-            //       )
-            //
-            //
-            //
-            //
-            //       ,
-            //
-            //     )   :  Padding(padding: EdgeInsets.all(20),
-            //
-            //       child: Container(
-            //         width: 150,
-            //         height: 60,
-            //         color: Colors.blue,
-            //
-            //         child: TextButton(onPressed: () async {
-            //
-            //           double ppredemption = double.parse(
-            //               pro.data!.ppRedemption
-            //                   .toString());
-            //           double wp=double.parse(walletpoints);
-            //
-            //           if (wp >= ppredemption) {
-            //             Widget okButton = TextButton(
-            //               child: Text("Yes"),
-            //               onPressed: () {
-            //                 double   tempwalletpoints =
-            //                     wp - ppredemption;
-            //                 // AppStorage.setString(AppStorage.current_wallet_point, tempwalletpoints.toString());
-            //                 ispointredeemeed = true;
-            //                 getProductExistsinCart(true);
-            //
-            //                 Navigator.pop(context);
-            //               },
-            //             );
-            //
-            //             Widget noButton = TextButton(
-            //               child: Text("No"),
-            //               onPressed: () {
-            //                 ispointredeemeed = false;
-            //                 getProductExistsinCart(true);
-            //
-            //                 Navigator.pop(context);
-            //               },
-            //             );
-            //
-            //             // set up the AlertDialog
-            //             AlertDialog alert = AlertDialog(
-            //               title: Text("Savekart"),
-            //               content: Text("Your wallet point is " +
-            //                   walletpoints.toString() +
-            //                   ".So you are eligible to redeem points.Do you want to redeem now ?"),
-            //               actions: [
-            //                 okButton,
-            //                 noButton
-            //               ],
-            //             );
-            //
-            //             // show the dialog
-            //             showDialog(
-            //               context: context,
-            //               builder: (BuildContext context) {
-            //                 return alert;
-            //               },
-            //             );
-            //           }
-            //           else {
-            //             getProductExistsinCart(true);
-            //           }
-            //
-            //
-            //
-            //
-            //         }, child: Text("Create Order",style: TextStyle(fontSize: 16,color: Colors.white),)),
-            //
-            //       )
-            //
-            //
-            //
-            //
-            //       ,
-            //
-            //     )
-            //
-            //
-            //   ],
-            //
-            //
-            // ),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child; // Image loaded successfully
+                    return Center(child: CircularProgressIndicator()); // Show loader while loading
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(Icons.image,size: 50,color: Colors.black26,); // Show a local placeholder on error
+                  },
 
-          )
+                  fit: BoxFit.fill,
+
+                ), // Icon displayed at the start.
+                title:  Text(pro.data!.productName.toString(), style: TextStyle(fontSize: 12),), // Main title with increased text size.
+                // Icon displayed at the end.
+                subtitle:    SizedBox(
+                  width: 120,
+                  height: 60,
+                  child:    QuantitySelector(
+                    initialValue: 1,
+                    min: 1,
+                    max: 10,
+                    onChanged: (value) {
+                      print("Quantity: $value");
+
+                      setState(() {
+                        qty=value;
+                      });
+                    },
+                  ) ,
+                )
 
 
 
-            ,flex: 3,)
+
+                , // Secondary text below the title.
+                selected: true, // Visually marks the ListTile as selected.
+                // Function executed when the ListTile is tapped.
+
+              ),
+            ),
+          ),flex: 1, )
+
+
+       ,
+          Expanded(child: Stack(
+            children: [
+
+Align(
+  alignment: FractionalOffset.topCenter,
+  child: ListView.builder(
+    itemCount: 5, // Number of items to display in the list.
+
+    // Builds each item in the list dynamically based on the index.
+    itemBuilder: (BuildContext context, int index) {
+      return ListTile(
+        leading: const Icon(Icons.list), // Icon on the left side of the ListTile.
+        trailing: const Text(
+          "GFG", // Text shown on the right side.
+          style: TextStyle(color: Colors.green, fontSize: 15), // Styling the trailing text.
+        ),
+        title: Text("List item $index"), // Main title text that shows item index.
+      );
+    },
+  ),
+)
+
+
+            ],
+
+          ),flex: 3,)
+
+
+
+
+
+
+
+
+
+
 
 
 

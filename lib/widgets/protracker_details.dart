@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:recharge_retry/web/ApiMethodes.dart';
+import 'package:recharge_retry/widgets/place_order_pro.dart';
 
 import '../domain/ProfileEntity.dart';
 import '../domain/cartDataExist.dart';
@@ -51,10 +52,6 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
   async {
     //getWalletPointsOffice.php
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ApiHelper.showLoaderDialog(context);
-    });
-
 
 
     ApiHelper apiHelper=new ApiHelper();
@@ -63,9 +60,7 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
 
     print(urldata);
     String response=await apiHelper.getApiResponse(urldata);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pop(context);
-    });
+
 
     var json=jsonDecode(response);
     setState(()  {
@@ -134,7 +129,7 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
 
         ,Container(height: 30,),
 
-        QuantitySelector(
+        (!isAlreadyexists)?    QuantitySelector(
           initialValue: 1,
           min: 1,
           max: 10,
@@ -145,7 +140,7 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
               qty=value;
             });
           },
-        ),
+        ) :Container(),
 
 
 
@@ -161,7 +156,10 @@ class _ProtrackerDetailsState extends State<ProtrackerDetails> {
 
 
 
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaceOrderPro(usr,pro)),
+              );
 
 
             }, child: Text("Go to Cart",style: TextStyle(fontSize: 16,color: Colors.white),)),

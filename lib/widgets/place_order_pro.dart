@@ -149,16 +149,11 @@ String ur=ApiMethodeCredentials.ecommerce_baseurl   +ApiMethodeCredentials.getPr
 Align(
   alignment: FractionalOffset.topCenter,
   child: ListView.builder(
-    itemCount: 5, // Number of items to display in the list.
-
-    // Builds each item in the list dynamically based on the index.
+    itemCount: 5,
     itemBuilder: (BuildContext context, int index) {
       return ListTile(
-        leading: const Icon(Icons.list), // Icon on the left side of the ListTile.
-        trailing: const Text(
-          "GFG", // Text shown on the right side.
-          style: TextStyle(color: Colors.green, fontSize: 15), // Styling the trailing text.
-        ),
+        leading:  Icon(Icons.list),
+
         title: Text("List item $index"), // Main title text that shows item index.
       );
     },

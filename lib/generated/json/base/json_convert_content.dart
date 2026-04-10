@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart' show debugPrint;
 import 'package:recharge_retry/domain/Protracker_NotInvoice_entity.dart';
 import 'package:recharge_retry/domain/autopool_count_entity.dart';
+import 'package:recharge_retry/domain/cart_details_entity.dart';
 import 'package:recharge_retry/domain/cart_order_details_entity.dart';
 import 'package:recharge_retry/domain/cart_order_entity.dart';
 import 'package:recharge_retry/domain/complaint_list_entity.dart';
@@ -166,6 +167,14 @@ class JsonConvert {
       return data.map<AutopoolCountData>((Map<String, dynamic> e) =>
           AutopoolCountData.fromJson(e)).toList() as M;
     }
+    if (<CartDetailsEntity>[] is M) {
+      return data.map<CartDetailsEntity>((Map<String, dynamic> e) =>
+          CartDetailsEntity.fromJson(e)).toList() as M;
+    }
+    if (<CartDetailsData>[] is M) {
+      return data.map<CartDetailsData>((Map<String, dynamic> e) =>
+          CartDetailsData.fromJson(e)).toList() as M;
+    }
     if (<CartOrderDetailsEntity>[] is M) {
       return data.map<CartOrderDetailsEntity>((Map<String, dynamic> e) =>
           CartOrderDetailsEntity.fromJson(e)).toList() as M;
@@ -292,6 +301,8 @@ class JsonConvertClassCollection {
     (ProtrackerNotInvoiceData).toString(): ProtrackerNotInvoiceData.fromJson,
     (AutopoolCountEntity).toString(): AutopoolCountEntity.fromJson,
     (AutopoolCountData).toString(): AutopoolCountData.fromJson,
+    (CartDetailsEntity).toString(): CartDetailsEntity.fromJson,
+    (CartDetailsData).toString(): CartDetailsData.fromJson,
     (CartOrderDetailsEntity).toString(): CartOrderDetailsEntity.fromJson,
     (CartOrderDetailsData).toString(): CartOrderDetailsData.fromJson,
     (CartOrderEntity).toString(): CartOrderEntity.fromJson,

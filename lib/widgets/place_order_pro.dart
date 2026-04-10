@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:recharge_retry/domain/cart_details_entity.dart';
 
 import '../domain/ProfileEntity.dart';
+import '../domain/cartDataExist.dart';
 import '../domain/protracker_entity.dart';
 import '../web/ApiMethodes.dart';
 import '../web/apiservices.dart';
@@ -26,7 +30,8 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
   UserData usr;
 
   ProtrackerEntity pro;
-  int qty=1;
+  int qty=0;
+  int cart_id=0;
 
   _PlaceOrderProState(this.usr,this.pro);
 
@@ -48,13 +53,61 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
     ApiHelper apiHelper=new ApiHelper();
 
 
-String ur=ApiMethodeCredentials.ecommerce_baseurl   +ApiMethodeCredentials.getProtrackerCart+"q="+apiHelper.getRandomnumber();
+String ur=ApiMethodeCredentials.ecommerce_baseurl   +ApiMethodeCredentials.getProtrackerCart+"?q="+apiHelper.getRandomnumber()+"&product_id="+pro.data!.productId.toString()+"&user_id="+usr.id.toString();
 
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
 
       Navigator.pop(context);
     });
+
+    String sp=await apiHelper.getApiResponse(ur);
+
+    CartDetailsEntity cartDataExistEntity=CartDetailsEntity.fromJson(jsonDecode(sp));
+
+
+    if(cartDataExistEntity.status==1)
+      {
+
+
+setState(() {
+  qty=int.parse(cartDataExistEntity.data!.quantity.toString());
+  cart_id=int.parse(cartDataExistEntity.data!.id.toString());
+});
+
+
+
+      }
+
+
+
+
+  }
+
+  updateCartQty(int qty)async{
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ApiHelper.showLoaderDialog(context);
+    });
+
+    ApiHelper apiHelper=new ApiHelper();
+
+
+
+
+    String ur=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.updateCartQtyOffice+"?q="+apiHelper.getRandomnumber()+"&id="+cart_id.toString()+"&quantity="+qty.toString();
+
+
+    String sp=await apiHelper.getApiResponse(ur);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      Navigator.pop(context);
+    });
+
+
+
+
+    getProtrackerCart();
 
 
   }
@@ -117,15 +170,22 @@ String ur=ApiMethodeCredentials.ecommerce_baseurl   +ApiMethodeCredentials.getPr
                   width: 120,
                   height: 60,
                   child:    QuantitySelector(
-                    initialValue: 1,
+                    initialValue: qty,
                     min: 1,
                     max: 10,
                     onChanged: (value) {
                       print("Quantity: $value");
 
-                      setState(() {
-                        qty=value;
-                      });
+                      // setState(() {
+                      //   qty=value;
+                      // });
+
+                      updateCartQty(value);
+
+
+
+
+
                     },
                   ) ,
                 )

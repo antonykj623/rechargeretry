@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class QuantitySelector extends StatefulWidget {
-  final int initialValue;
-  final int min;
-  final int max;
-  final Function(int) onChanged;
+   int initialValue;
+   int min;
+   int max;
+   Function(int) onChanged;
 
-  const QuantitySelector({
+   QuantitySelector({
     Key? key,
-    this.initialValue = 1,
+    required this.initialValue ,
     this.min = 1,
     this.max = 10,
     required this.onChanged,

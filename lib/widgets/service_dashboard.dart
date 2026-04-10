@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:recharge_retry/domain/autopool_count_entity.dart';
 import 'package:recharge_retry/domain/protracker_entity.dart';
 import 'package:recharge_retry/web/ApiMethodes.dart';
+import 'package:recharge_retry/widgets/eventlist.dart';
 import 'package:recharge_retry/widgets/loginpage.dart';
 import 'package:recharge_retry/widgets/protracker_details.dart';
 import 'package:recharge_retry/widgets/recharge_list_screen.dart';
@@ -542,7 +543,10 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
                       }
                     else if(index==2)
                       {
-
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => EventListScreen()),
+                        );
 
                       }
 

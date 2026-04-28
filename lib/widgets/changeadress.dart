@@ -193,6 +193,8 @@ class _AddressChangeScreenState extends State<AddressChangeScreen> {
                                   'pincode':_pincodecontroller.text,
                                   'userid':userid
                                 };
+
+
                                 // addNewAddress.php
 
 
@@ -396,6 +398,26 @@ class _AddressChangeScreenState extends State<AddressChangeScreen> {
                   keyboardType: TextInputType.number,
                 ),
 
+
+                Container(
+                  width: double.infinity,
+                  height: 60,
+                  child:   DropdownButton<String>(
+                    hint: Text('Select a country'),
+                    value: selectedCountry,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedCountry = newValue.toString();
+                      });
+                    },
+                    items: countries.map<DropdownMenuItem<String>>((String country) {
+                      return DropdownMenuItem<String>(
+                        value: country,
+                        child: Text(country),
+                      );
+                    }).toList(),
+                  ),
+                ),
                 Container(
                     width: double.infinity,
                     height: 60,
@@ -421,25 +443,6 @@ class _AddressChangeScreenState extends State<AddressChangeScreen> {
                       }).toList(),
                     ) ),
 
-                Container(
-                  width: double.infinity,
-                  height: 60,
-                  child:   DropdownButton<String>(
-                    hint: Text('Select a country'),
-                    value: selectedCountry,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedCountry = newValue.toString();
-                      });
-                    },
-                    items: countries.map<DropdownMenuItem<String>>((String country) {
-                      return DropdownMenuItem<String>(
-                        value: country,
-                        child: Text(country),
-                      );
-                    }).toList(),
-                  ),
-                ),
 
 
 

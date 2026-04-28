@@ -55,5 +55,6 @@ class ApiMethodeCredentials{
   static String addToCartStaff="addToCartStaff.php";
   static String getProtrackerCart="getProtrackerCart.php";
   static String updateCartQtyOffice="updateCartQtyOffice.php";
+  static String createComplimentryOrder="createComplimentryOrder.php";
 
 }

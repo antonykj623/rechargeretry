@@ -340,6 +340,16 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
 
                       onTap: () async {
 
+
+                        String? value =
+                        await openDialog(context);
+
+                        if(value.toString().trim().isNotEmpty)
+                          {
+
+
+
+
                         ApiHelper.showLoaderDialog(context);
                         Map<String,String> mp=new HashMap();
                         mp['address_id']=item["id"].toString();
@@ -347,6 +357,7 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
                         mp['isWalletUsed']="0";
                         mp['paid_amount']=(qty*double.parse(pro.data!.priceSales.toString())).toString();
                         mp['payment_type']="4";
+                        mp['remarks']=value.toString();
                         mp['wallet_amount_used']="0";
                         mp["quantity"]=qty.toString();
                         mp["user_id"]=usr.id.toString();
@@ -358,23 +369,29 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
                         Map<String, dynamic> data=  jsonDecode(response)  ;
                         if(data['status']==1) {
                           String idTransaction = data['data'].toString();
-                        String  orderid=idTransaction.toString();
-                          showOrderDialog(context, true, "\nORDER ID : "+orderid+"\n Your order placed successfully!");
+                          String orderid = idTransaction.toString();
+
+                          showOrderDialog(context, true,
+                              "\nORDER ID : " + orderid +
+                                  "\n Your order placed successfully!");
 
 
-                          String urldata=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.createInvoiceByUpdateStatus+"?order_id="+orderid;
+                          String urldata = ApiMethodeCredentials
+                              .ecommerce_baseurl + ApiMethodeCredentials
+                              .createInvoiceByUpdateStatus + "?order_id=" +
+                              orderid;
 
 
+                          ApiHelper apiHelper = new ApiHelper();
 
-                          ApiHelper apiHelper=new ApiHelper();
+                          String data1 = await apiHelper.getApiResponse(
+                              urldata);
+                        }
 
-                          String data1=await apiHelper.getApiResponse(urldata);
+                        }
+                        else{
 
-
-
-
-
-
+                          ApiHelper.showAlertDialog(context, "Enter Remarks");
                         }
 
 
@@ -442,6 +459,54 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
       },
     );
   }
+
+
+  Future<String?> openDialog(BuildContext context) async {
+    TextEditingController controller =
+    TextEditingController();
+
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Remarks"),
+
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: "Type here",
+            ),
+          ),
+
+          actions: [
+
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, "");
+              },
+              child: Text("Cancel"),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(
+                  context,
+                  controller.text,
+                );
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+
+    return result;
+  }
+
+
+
+
 
   void showAddAddressDialog(BuildContext context) {
     final nameController = TextEditingController();

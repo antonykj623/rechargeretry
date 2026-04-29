@@ -361,6 +361,20 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
                         String  orderid=idTransaction.toString();
                           showOrderDialog(context, true, "\nORDER ID : "+orderid+"\n Your order placed successfully!");
 
+
+                          String urldata=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.createInvoiceByUpdateStatus+"?order_id="+orderid;
+
+
+
+                          ApiHelper apiHelper=new ApiHelper();
+
+                          String data1=await apiHelper.getApiResponse(urldata);
+
+
+
+
+
+
                         }
 
 

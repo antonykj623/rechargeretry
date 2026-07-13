@@ -6,7 +6,7 @@ class ApiMethodeCredentials{
 
   static String saveapp_baseurl="https://mysaving.in/IntegraAccount/api/";
 
-  static String saveapp_rechargebaseurl="https://mysaving.in/easyrecharge/paymentgateway/";
+  static String saveapp_rechargebaseurl="https://mysaving.in/IntegraAccount/api/Recharge_Api/paymentgateway/";
 
   static String photoproof_baseurl="https://mysaving.in/uploads/proof/";
 
@@ -25,7 +25,7 @@ class ApiMethodeCredentials{
   static String updateRechargeStatus="updateRechargeStatus.php";
   static String updateGenStatus="updateGenStatus.php";
   static String getRechargeLists="getRechargeLists.php";
-  static String retryrechargetest="retryrechargetest.php";
+  static String retryrechargetest="retryrechargetest_updated.php";
   static String getOrderWithAddress="getOrderWithAddress.php";
   static String getOrderItemDetails="getOrderItemDetails.php";
   static String getSavekartinvoice="getSavekartinvoice.php";

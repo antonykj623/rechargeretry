@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../widgets/native_prefs.dart';
+
 String baseurl = "https://mysaving.in/IntegraAccount/api/";
 
 
@@ -33,12 +35,12 @@ class ApiHelper {
 
   Future<String> getApiResponse(String url) async {
 
-
+    String? token=await NativePrefs.getValue("Token");
 
     Map<String, String> headers = {
 
       "Content-Type": "application/json",
-      'Authorization':"qwertyuioplkjhgfvbnmlkjiou.OTc0NzQ5Nzk2Nw==.MjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQ=.qwertyuioplkjhgfvbnmlkjiou"
+      'Authorization':(token!=null)? token : "qwertyuioplkjhgfvbnmlkjiou.OTg0NjI5MDU1NQ==.NTRhZjlhZmQyZDdlZWQ5MTNhMjFkYTI4MmJlMmNkMjc=.qwertyuioplkjhgfvbnmlkjiou"
 
     };
 
@@ -62,11 +64,12 @@ class ApiHelper {
 
   Future<String> postApiResponse(String url, Map <String,String> postData) async {
 
+    String? token=await NativePrefs.getValue("Token");
     final response = await http.post(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization':"qwertyuioplkjhgfvbnmlkjiou.OTc0NzQ5Nzk2Nw==.MjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQ=.qwertyuioplkjhgfvbnmlkjiou"
+        'Authorization':(token!=null)? token : "qwertyuioplkjhgfvbnmlkjiou.OTg0NjI5MDU1NQ==.NTRhZjlhZmQyZDdlZWQ5MTNhMjFkYTI4MmJlMmNkMjc=.qwertyuioplkjhgfvbnmlkjiou"
 
 
       },

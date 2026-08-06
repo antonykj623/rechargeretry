@@ -26,6 +26,8 @@ import 'crm_savekart/complaint_list.dart';
 import 'crm_savekart/select_app_page.dart';
 import 'dialogbox/nameboxdialog.dart';
 import 'dialogbox/searchorder.dart';
+import 'kyc/k_y_c_approved_page.dart';
+import 'kyc/kycupdatedpage.dart';
 import 'kycform.dart';
 
 
@@ -63,11 +65,13 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
   ];
 
 
-  List<String>saveappProcount=["Auto Pool Pro Count","Convert to Invoice","Save App Events"];
+  List<String>saveappProcount=["Auto Pool Pro Count","Convert to Invoice","Save App Events","Kyc update data","KYC verified data"];
   List<IconData> saveappProcountIcons = [
     Icons.auto_graph,
     Icons.update,
-    Icons.event
+    Icons.event,
+    Icons.info,
+    Icons.insert_drive_file_outlined
 
     // Auto Pool Count List
   ];
@@ -549,8 +553,22 @@ class _SaveAppServicesScreenState extends State<SaveAppServicesScreen> {
                         );
 
                       }
+                    else if(index ==3)
+                      {
 
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => KYCUpdatedPage()),
+                        );
 
+                      }
+                    else if(index ==4)
+                    {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => KYCApprovedPage()),
+                      );
+                    }
 
                   },
                 )

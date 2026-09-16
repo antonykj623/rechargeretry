@@ -40,7 +40,7 @@ class ApiHelper {
     Map<String, String> headers = {
 
       "Content-Type": "application/json",
-      'Authorization':(token!=null)? token : "qwertyuioplkjhgfvbnmlkjiou.OTg0NjI5MDU1NQ==.NTRhZjlhZmQyZDdlZWQ5MTNhMjFkYTI4MmJlMmNkMjc=.qwertyuioplkjhgfvbnmlkjiou"
+      'Authorization':(token!=null)? token : ""
 
     };
 
@@ -69,7 +69,7 @@ class ApiHelper {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization':(token!=null)? token : "qwertyuioplkjhgfvbnmlkjiou.OTg0NjI5MDU1NQ==.NTRhZjlhZmQyZDdlZWQ5MTNhMjFkYTI4MmJlMmNkMjc=.qwertyuioplkjhgfvbnmlkjiou"
+        'Authorization':(token!=null)? token : ""
 
 
       },

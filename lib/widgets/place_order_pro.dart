@@ -664,9 +664,7 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
                                             };
                                             // addNewAddress.php
 
-                                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                                              ApiHelper.showLoaderDialog(context);
-                                            });
+                                            ApiHelper.showLoaderDialog(context);
 
                                             ApiHelper apiHelper=new ApiHelper();
 
@@ -675,9 +673,9 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
                                             print(response);
 
 
-                                            WidgetsBinding.instance.addPostFrameCallback((_) {
+
                                               Navigator.pop(context);
-                                            });
+
 
                                             var js= jsonDecode(response) ;
 

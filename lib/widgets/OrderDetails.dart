@@ -28,7 +28,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   async {
 
     ApiHelper.showLoaderDialog(context);
-    String ur=ApiMethodeCredentials.saveapp_baseurl+ApiMethodeCredentials.updateInvisibleOrderData+"?timestamp="+new ApiHelper().getRandomnumber();
+    String ur=ApiMethodeCredentials.ecommerce_baseurl+ApiMethodeCredentials.updateInvisibleOrderData+"?timestamp="+new ApiHelper().getRandomnumber();
 
     Map<String,String>mp=new HashMap();
 

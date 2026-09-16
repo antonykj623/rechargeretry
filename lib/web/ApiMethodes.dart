@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 
 class ApiMethodeCredentials{
 
-  static String ecommerce_baseurl="https://mysaving.in/IntegraAccount/ecommerce_api/";
+  static String ecommerce_baseurl="https://mysaving.in/client/savekart_api/";
 
-  static String saveapp_baseurl="https://mysaving.in/IntegraAccount/api/";
+  static String saveapp_baseurl="https://mysaving.in/client/save_popular_api/";
 
-  static String saveapp_rechargebaseurl="https://mysaving.in/IntegraAccount/api/Recharge_Api/paymentgateway/";
+  static String saveapp_rechargebaseurl="https://mysaving.in/client/save_popular_api/Recharge_Api/paymentgateway/";
 
   static String photoproof_baseurl="https://mysaving.in/uploads/proof/";
 

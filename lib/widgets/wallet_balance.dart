@@ -76,7 +76,7 @@ class _WalletBalanceState extends State<WalletBalance> {
 
               ApiHelper apiHelper=new ApiHelper();
 
-              String response=await apiHelper.postApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/changeWalletAmount.php?timestamp="+apiHelper.getRandomnumber()+"&user_id="+userd.id.toString(),mp);
+              String response=await apiHelper.postApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/updateWalletBalanceStaff.php?timestamp="+apiHelper.getRandomnumber()+"&user_id="+userd.id.toString(),mp);
 
               print(response);
 
@@ -115,7 +115,7 @@ class _WalletBalanceState extends State<WalletBalance> {
 
               ApiHelper apiHelper=new ApiHelper();
 
-              String response=await apiHelper.postApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/changeWalletAmount.php?timestamp="+apiHelper.getRandomnumber()+"&user_id="+userd.id.toString(),mp);
+              String response=await apiHelper.postApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/updateWalletBalanceStaff.php?timestamp="+apiHelper.getRandomnumber()+"&user_id="+userd.id.toString(),mp);
 
               print(response);
 

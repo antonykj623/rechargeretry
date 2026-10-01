@@ -90,7 +90,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
 
       ApiHelper apiHelper=new ApiHelper();
 
-      String response=await apiHelper.getApiResponse("https://mysaving.in/IntegraAccount/ecommerce_api/updatePaymentStatus.php?timestamp="+apiHelper.getRandomnumber()+"&id="+widget.cartOrderData.orderdata!.id.toString()+"&status="+paymentstatus.toString());
+      String response=await apiHelper.getApiResponse("https://mysaving.in/client/savekart_api/updatePaymentStatus.php?timestamp="+apiHelper.getRandomnumber()+"&id="+widget.cartOrderData.orderdata!.id.toString()+"&status="+paymentstatus.toString());
 
       print(response);
       Navigator.pop(context);

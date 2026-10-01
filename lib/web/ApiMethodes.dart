@@ -4,9 +4,9 @@ class ApiMethodeCredentials{
 
   static String ecommerce_baseurl="https://mysaving.in/client/savekart_api/";
 
-  static String saveapp_baseurl="https://mysaving.in/client/save_popular_api/";
+  static String saveapp_baseurl="https://mysaving.in/client/save_popular/";
 
-  static String saveapp_rechargebaseurl="https://mysaving.in/client/save_popular_api/Recharge_Api/paymentgateway/";
+  static String saveapp_rechargebaseurl="https://mysaving.in/client/save_popular/Recharge_Api/paymentgateway/";
 
   static String photoproof_baseurl="https://mysaving.in/uploads/proof/";
 
@@ -27,7 +27,7 @@ class ApiMethodeCredentials{
   static String getRechargeLists="getRechargeLists.php";
   static String retryrechargetest="retryrechargetest_updated.php";
   static String getOrderWithAddress="getOrderWithAddress.php";
-  static String getOrderItemDetails="getOrderItemDetails.php";
+  static String getOrderItemDetails="getOrderItemsData.php";
   static String getSavekartinvoice="getSavekartinvoice.php";
   static String getUserDataBYRegid="getUserDataBYRegid.php";
   static String getOrderDetailsByIDStaff="getOrderDetailsByIDStaff.php";

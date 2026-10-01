@@ -14,6 +14,8 @@ import 'dialogbox/quatityselector.dart';
 
 import 'package:http/http.dart' as http;
 
+import 'native_prefs.dart';
+
 class PlaceOrderPro extends StatefulWidget {
 
   UserData usr;
@@ -113,7 +115,15 @@ class _PlaceOrderProState extends State<PlaceOrderPro> {
     );
 
     try {
-      final response = await http.get(url);
+      String? token=await NativePrefs.getValue("Token");
+
+      Map<String, String> headers = {
+
+        "Content-Type": "application/json",
+        'Authorization':(token!=null)? token : ""
+
+      };
+      final response = await http.get(url,headers: headers);
 
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
